@@ -11,9 +11,11 @@ body.dark{
 body{
   transition: background-color 0.3s ease, color 0.3s ease;
   background-color: #eef2ff;
+  
 }
 
 /* .landing{
   background: linear-gradient(to bottom, white 0%,#93c5fd 35%,or 90% );
 } */
+
 

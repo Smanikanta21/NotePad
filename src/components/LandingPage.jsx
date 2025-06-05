@@ -3,7 +3,9 @@ import bg from '../assets/bg-assets.jpg'
 import instagram from '../assets/insta.png'
 import github from '../assets/github.png'
 import linkedin from '../assets/linkedin.png'
-const LandingPage=()=>{
+import { useNavigate } from "react-router-dom";
+const LandingPage = () => {
+    const navigate = useNavigate();
     return (
         <>
             <div className="relative min-h-screen">
@@ -12,26 +14,26 @@ const LandingPage=()=>{
                     <div className="absolute inset-0"></div>
                 </div>
                 <div className="relative z-10">
-                    <div className="fixed top-0 left-0 w-full z-30 backdrop-blur-sm bg-white/40 shadow-md border-b border-white/20 pb-3.5">
-                      <nav className="flex md:ml-11 w-full md:w-11/12 md:flex-row gap-7 justify-center pt-6 md:justify-around md:pt-12 flex-col items-center">
-                          <div className="flex md:hidden items-center gap-10 font-mono text-xl text-blue-600">
-                              <a href="#About">About</a>
-                              <a href="#">Contact</a>
-                              <a href="#">Stacks</a>
-                          </div>
-                          <div className="flex gap-5 flex-row justify-center items-center">
-                              <Notebook className="bg-clip-text bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500" size={30}/>
-                              <a href="#" className="text-4xl font-bold">NotePad</a>
-                          </div>
-                          <div className="md:flex hidden items-center gap-11 font-mono text-3xl text-blue-600">
-                              <a href="#About">About</a>
-                              <a href="#">Contact</a>
-                              <a href="#">Stacks</a>
-                          </div>
-                          <div className="hidden md:block items-center p-3 text-white rounded-xl bg-blue-600">
-                              <a className="text-xl " href="#">Get Started</a>
-                          </div>
-                      </nav>
+                    <div className="fixed top-0 left-0 w-full z-30 backdrop-blur-sm shadow-md border-b border-white/20 pb-3.5">
+                        <nav className="flex md:ml-11 w-full md:w-11/12 md:flex-row gap-7 justify-center pt-6 md:justify-around md:pt-12 flex-col items-center">
+                            <div className="flex md:hidden items-center gap-10 font-mono text-xl text-blue-600">
+                                <a href="#About">About</a>
+                                <a href="#Stacks">Stacks</a>
+                                <a href="#Contact">Contact</a>
+                            </div>
+                            <div className="flex gap-5 flex-row justify-center items-center">
+                                <Notebook className="bg-clip-text bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500" size={30} />
+                                <a href="#" className="text-4xl font-bold">NotePad</a>
+                            </div>
+                            <div className="md:flex hidden items-center gap-11 font-mono text-3xl text-blue-600">
+                                <a href="#About">About</a>
+                                <a href="#Stacks">Stacks</a>
+                                <a href="#Contact">Contact</a>
+                            </div>
+                            <div className="hidden md:block items-center p-3 text-white rounded-xl bg-blue-600">
+                                <a className="text-xl " href="/login">Get Started</a>
+                            </div>
+                        </nav>
                     </div>
                     <div className="flex justify-center items-center h-screen lg:px-32 md:px-18 text-center backdrop-blur-md">
                         <h1 className="text-5xl md:text-8xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 via-purple-500 to-pink-500">
@@ -50,34 +52,111 @@ const LandingPage=()=>{
                         </p>
                     </div>
 
-                </div>
-            </div>
 
-
-
-
-            <div className="flex justify-center w-full h-[50vh] py-20">
-              <div className="w-[80vw] h-full bg-cover bg-center rounded-br-full flex justify-evenly pr-10 items-center rounded-tr-full shadow-lg" style={{backgroundImage: `url(${bg})`,backgroundRepeat: 'no-repeat',backgroundSize: 'cover',backgroundPosition: 'center',width:'75vw'}} >
-                <div className="flex gap-4 flex-col">
-                    <h1 className="font-bold text-3xl">Contact Info</h1>
-                    <p>Email: siraparapuabhinay21@gmail.com</p>
-                    <div className="flex flex-row justify-center gap-3">
-                        <img src={instagram} alt="" className="rounded-lg w-10 h-10"/>
-                        <img src={github} alt="" className="rounded-lg w-10 h-10"/>
-                        <img src={linkedin} alt="" className="rounded-lg w-10 h-10"/>
+                    <div id="Stacks" className="relative z-10 py-36 lg:py-48 px-6 md:px-32 text-center bg-gradient-to-b from-white via-indigo-50 to-purple-50">
+                        <h2 className="text-4xl md:text-5xl font-bold text-indigo-700 mb-10">Tech Stack</h2>
+                        <p className="text-lg text-gray-700 max-w-2xl mx-auto mb-16">
+                            Here are the technologies powering <span className="font-semibold text-indigo-800">NotePad</span>.
+                            Each tool was chosen to provide speed, flexibility, and a beautiful user experience.
+                        </p>
+                        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 max-w-5xl mx-auto">
+                            <div className="p-6 bg-white shadow-md rounded-xl hover:shadow-xl transition">
+                                <p className="font-semibold text-indigo-700">React.js</p>
+                            </div>
+                            <div className="p-6 bg-white shadow-md rounded-xl hover:shadow-xl transition">
+                                <p className="font-semibold text-purple-700">Tailwind CSS</p>
+                            </div>
+                            <div className="p-6 bg-white shadow-md rounded-xl hover:shadow-xl transition">
+                                <p className="font-semibold text-pink-600">Firebase</p>
+                            </div>
+                            <div className="p-6 bg-white shadow-md rounded-xl hover:shadow-xl transition">
+                                <p className="font-semibold text-indigo-700">Vite</p>
+                            </div>
+                            <div className="p-6 bg-white shadow-md rounded-xl hover:shadow-xl transition">
+                                <p className="font-semibold text-purple-700">Lucide Icons</p>
+                            </div>
+                            <div className="p-6 bg-white shadow-md rounded-xl hover:shadow-xl transition">
+                                <p className="font-semibold text-pink-600">React Router</p>
+                            </div>
+                            {/* <div className="p-6 bg-white shadow-md rounded-xl hover:shadow-xl transition">
+                                <p className="font-semibold text-indigo-700">Authlib / Flask (alt auth)</p>
+                            </div> */}
+                            <div className="p-6 bg-white shadow-md rounded-xl hover:shadow-xl transition">
+                                <p className="font-semibold text-purple-700">Netlify / Vercel</p>
+                            </div>
+                        </div>
                     </div>
+
+                    <section id="Contact" className="w-full px-6 py-16 md:py-24">
+                        <div className="max-w-6xl mx-auto bg-indigo-50 rounded-[3rem] p-10 md:p-16 shadow-xl relative overflow-hidden" style={{ backgroundImage: 'url(https://keynote.tailwindui.com/_next/static/media/background-newsletter.488a0204.jpg)', backgroundSize: 'cover', backgroundPosition: 'center top -80px' }}>
+
+                            <div className="md:flex hidden justify-center w-full h-[50vh] py-20 ">
+                                <div className="w-[80vw] h-full bg-cover gap-48 bg-center rounded-br-full flex justify-evenly pr-10 items-center rounded-tr-full" style={{ backgroundImage: `url(${bg})`, backgroundRepeat: 'no-repeat', backgroundSize: 'cover', backgroundPosition: 'center top -280px', width: '80vw' }} >
+                                    <div className="flex gap-4 px-8 flex-col">
+                                        <h1 className="font-bold text-3xl">Contact Info</h1>
+                                        <p>Email: siraparapuabhinay21@gmail.com</p>
+                                        <div className="flex justify-center gap-4">
+                                            <a href="https://www.instagram.com/abhi._.nay"><img src={instagram} alt="Instagram" className="rounded-lg w-10 h-10 hover:scale-120 cursor-pointer transition-transform" /></a>
+                                            <a href="https://github.com/Smanikanta21"><img src={github} alt="GitHub" className="rounded-lg w-10 h-10 hover:scale-120 cursor-pointer transition-transform" /></a>
+                                            <a href=""><img src={linkedin} alt="LinkedIn" className="rounded-lg w-10 h-10 hover:scale-120 cursor-pointer transition-transform" /></a>
+                                        </div>
+                                    </div>
+                                    <div className=" shadow-2xl h-[30vh] flex-col w-[30vw]  overflow-hidden rounded-br-full rounded-tr-full flex justify-evenly items-center">
+                                        <h1 className="text-3xl font-bold ">Contact Me</h1>
+                                        <textarea
+                                            placeholder="Enter Message"
+                                            className="border focus:outline-none focus:ring-2 text-center border-gray-300  resize h-[20vh] text-pretty leading-snug w-[20vw] focus:ring-blue-600 flex items-center justify-evenly px-6" />
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div className="md:hidden py-20 flex justify-center items-center ">
+                                <div className="flex flex-col w-11/12 max-w-md gap-6 p-6 rounded-xl shadow-lg border border-gray-200 text-center">
+                                    <h1 className="text-2xl font-bold text-indigo-700">Contact Us</h1>
+                                    <p className="text-gray-700 text-sm">Email: siraparapuabhinay21@gmail.com</p>
+                                    <div className="flex justify-center gap-4">
+                                        <a href="https://www.instagram.com/abhi._.nay"><img src={instagram} alt="Instagram" className="rounded-lg w-10 h-10 hover:scale-120 cursor-pointer transition-transform" /></a>
+                                        <a href="https://github.com/Smanikanta21"><img src={github} alt="GitHub" className="rounded-lg w-10 h-10 hover:scale-120 cursor-pointer transition-transform" /></a>
+                                        <a href=""><img src={linkedin} alt="LinkedIn" className="rounded-lg w-10 h-10 hover:scale-120 cursor-pointer transition-transform" /></a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="relative z-10 flex flex-col lg:flex-row items-center justify-between gap-10">
+                                <div className="text-center lg:text-left">
+                                    <h2 className="text-4xl md:text-5xl font-bold text-indigo-900">Stay up to date</h2>
+                                    <p className="mt-4 text-lg text-indigo-800 max-w-md">
+                                        Get updates on all of our events and be the first to get notified when tickets go on sale.
+                                    </p>
+                                </div>
+                                <div className="w-full max-w-md">
+                                    <p className="mb-2 text-indigo-800 font-semibold text-center lg:text-left">Sign up to our newsletter ↓</p>
+                                    <form className="flex flex-col sm:flex-row items-center gap-3">
+                                        <input type="email" placeholder="Email address" className="flex-1 px-5 py-3 rounded-full border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 shadow" />
+                                        <button type="submit" className="bg-blue-600 text-white px-6 py-3 rounded-full font-semibold hover:bg-blue-700 transition">Sign up today</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
                 </div>
-                <div className="bg-white h-[30vh] flex-col w-[30vw] rounded-full overflow-hidden flex justify-evenly items-center"> 
-                    <h1 className="text-3xl font-bold ">Contact Me</h1>
-                    <textarea
-                      placeholder="Enter Message"
-                      className="border focus:outline-none focus:ring-2 text-center resize h-[20vh] rounded-full w-[20vw] focus:ring-blue-600 flex items-center justify-center p-6 leading-[20vh]"
-                    />
-                </div>
-              </div>
+
+
+
+
+                <footer className="w-full bg-indigo-50 text-center py-6 border-t border-gray-200">
+                    <p className="text-sm text-gray-600">
+                        © {new Date().getFullYear()} NotePad — All rights reserved.
+                    </p>
+                </footer>
+
             </div>
+
+
+
+
+
         </>
-            
+
     )
 }
 
