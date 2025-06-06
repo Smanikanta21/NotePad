@@ -3,7 +3,7 @@ import bg from '../assets/bg-assets.jpg'
 import instagram from '../assets/insta.png'
 import github from '../assets/github.png'
 import linkedin from '../assets/linkedin.png'
-import { useNavigate } from "react-router-dom";
+import { useNavigate,Link } from "react-router-dom";
 const LandingPage = () => {
     const navigate = useNavigate();
     return (
@@ -31,7 +31,7 @@ const LandingPage = () => {
                                 <a href="#Contact">Contact</a>
                             </div>
                             <div className="hidden md:block items-center p-3 text-white rounded-xl bg-blue-600">
-                                <a className="text-xl " href="/login">Get Started</a>
+                                <Link className="text-xl " to="/login">Get Started</Link>
                             </div>
                         </nav>
                     </div>
