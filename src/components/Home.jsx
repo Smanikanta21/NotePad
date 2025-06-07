@@ -1,12 +1,18 @@
 import React, { use } from 'react'
 import { useState, useEffect } from 'react'
+import { useNavigate } from 'react-router-dom'
+// import { supabase } from '../server/suparbase'
 
 const Home = () => {
   const [modal, setModal] = useState(false)
+  const nav = useNavigate();
+
   useEffect(() => {
     const theme = localStorage.getItem('theme')
     console.log(theme)
   }, [])
+
+
     return (
       <>
         <div>

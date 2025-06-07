@@ -1,16 +1,18 @@
+
 import React from 'react'
 import bg from '../assets/bg-assets.jpg'
 import google from '../assets/google.png'
 import github from '../assets/github.png'
 import { UserRound } from 'lucide-react'
-import { Link } from 'react-router-dom'
-
+import { Link, useNavigate } from 'react-router-dom'
+// import { supabase } from '../server/suparbase';
 const LoginPage = () => {
+    const nav = useNavigate();
 
-    const HandleGooglesignOIn=() =>{
-        
+    const HandleGooglesignIn= async () =>{
+
+
     }
-    console.log('login')
     return (
         <div>
             <div className='z-10 fixed md:-top-96 md:flex md:justify-center w-full'> <img src={bg} className='md:w-[70vw]' alt="" /></div>
@@ -29,7 +31,7 @@ const LoginPage = () => {
 
                     {/* medium and large screens */}
                     <div className='hidden md:flex justify-center flex-col items-center gap-5'>
-                        <button className='p-2 flex flex-row items-center px-4.5 py-3 rounded-xl gap-3.5 bg-white hover:scale-105 hover:transition-transform cursor-pointer hover:shadow-xl '><img src={google} className='w-7' alt="" />Sign In With Google</button>
+                        <button className='p-2 flex flex-row items-center px-4.5 py-3 rounded-xl gap-3.5 bg-white hover:scale-105 hover:transition-transform cursor-pointer hover:shadow-xl' onClick={HandleGooglesignIn}><img src={google} className='w-7' alt="" />Sign In With Google</button>
                         <button className='p-2 flex flex-row items-center px-4.5 py-3.5 rounded-xl gap-3.5 bg-white hover:scale-105 hover:transition-transform cursor-pointer hover:shadow-xl '><img src={github} alt="" className='w-7' /> Sign In With Github</button>
                         <Link to="/signup" className="p-2 flex flex-row items-center px-3.5 py-2 rounded-xl gap-3.5 bg-white hover:scale-105 transition-transform cursor-pointer shadow hover:shadow-xl"><UserRound size={30} /> Don't Have Account? <br /> Create Account</Link>
                     </div>
@@ -37,7 +39,7 @@ const LoginPage = () => {
                     {/* Small Screens */}
                     <div className='md:hidden gap-3 flex flex-col items-center justify-center'>
                         <div className='flex gap-3'>
-                            <img src={google} className='w-8' alt="" />
+                            <img src={google} onClick={HandleGooglesignIn} className='w-8' alt="" />
                             <img src={github} alt="" className='w-8'/>
                         </div>
                         <div className='flex flex-col'>
