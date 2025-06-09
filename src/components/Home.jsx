@@ -18,7 +18,7 @@ const Home = () => {
         <div>
           <div className='h-screen'>
               <div className='fixed bottom-6 right-5'>
-                <button onClick={() => setModal(true)} className='text-2xl rounded-full bg-orange-400 p-2.5 bottom-6 text-white'>Add Note</button>
+                <button onClick={() => setModal(true)} className='text-2xl rounded-full bg-blue-600 p-2.5 shadow-md hover:shadow-2xl hover:scale-105 transition-all duration-200 bottom-6 text-white'>Add Note</button>
               </div>
               {modal && (
                 <div className='fixed inset-0 bg-opacity-50 flex items-center justify-center z-50'>
@@ -32,7 +32,7 @@ const Home = () => {
                             alert('Please enter a tittle')
                           }else{
                            setModal(false)}}}
-                        className='bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600'> Save</button>
+                        className='bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-600'> Save</button>
                       <button
                         onClick={() => setModal(false)}
                         className='bg-gray-300 px-4 py-2 rounded-lg hover:bg-gray-400'

@@ -15,7 +15,7 @@ const LandingPage = () => {
                 </div>
                 <div className="relative z-10">
                     <div className="fixed top-0 left-0 w-full z-30 backdrop-blur-sm shadow-md border-b border-white/20 pb-3.5">
-                        <nav className="flex md:ml-11 w-full md:w-11/12 md:flex-row gap-4 md:gap-7 justify-center pt-6 md:justify-around md:pt-12 flex-col items-center">
+                        <nav className="flex md:ml-11 w-full md:w-11/12 md:flex-row gap-4 md:gap-7 justify-center pt-6 md:justify-around md:pt-2 flex-col items-center">
                             <div className="flex gap-5 flex-row justify-center items-center">
                                 <Notebook className="bg-clip-text bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500" size={30} />
                                 <a href="#" className="text-4xl font-bold">NotePad</a>
@@ -44,7 +44,7 @@ const LandingPage = () => {
                         </nav>
                     </div>
                     <div className="flex md:flex-row flex-col gap-6 md:gap-0 justify-center items-center h-screen lg:px-32 md:px-18 text-center backdrop-blur-md">
-                        <h1 className="text-5xl md:mt-0 mt-10 px-6 md:text-8xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 via-purple-500 to-pink-500">
+                        <h1 className="text-5xl md:mt-0 mt-10 px-6 md:text-7xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 via-purple-500 to-pink-500">
                             Handwrite, brainstorm, and build ideas with your team — all in one beautiful, collaborative space
                         </h1>
                             <div className="block md:hidden items-center p-3 text-white rounded-xl bg-blue-600">
@@ -101,7 +101,7 @@ const LandingPage = () => {
                     <section id="Contact" className="w-full px-6 py-16 md:py-24">
                         <div className="max-w-6xl mx-auto bg-indigo-50 rounded-[3rem] p-10 md:p-16 shadow-xl relative overflow-hidden" style={{ backgroundImage: 'url(https://keynote.tailwindui.com/_next/static/media/background-newsletter.488a0204.jpg)', backgroundSize: 'cover', backgroundPosition: 'center top -80px' }}>
 
-                            <div className="md:flex hidden justify-center w-full h-[50vh] py-20 ">
+                            <div className="md:flex hidden justify-center w-full md:h-[60vh] py-20 ">
                                 <div className="w-[80vw] h-full bg-cover gap-48 bg-center rounded-br-full flex justify-evenly pr-10 items-center rounded-tr-full" style={{ backgroundImage: `url(${bg})`, backgroundRepeat: 'no-repeat', backgroundSize: 'cover', backgroundPosition: 'center top -280px', width: '80vw' }} >
                                     <div className="flex gap-4 px-8 flex-col">
                                         <h1 className="font-bold text-3xl">Contact Info</h1>
