@@ -1,5 +1,5 @@
 import { React, useState, useEffect } from 'react'
-import { LucideMenu, Sun, Moon, Ellipsis, NotebookPen } from 'lucide-react'
+import { LucideMenu, Sun, Moon, Ellipsis, FileText } from 'lucide-react'
 import { Link } from 'react-router-dom'
 const Nav = () => {
   const [theme, SetTheme] = useState(false)
@@ -24,13 +24,18 @@ const Nav = () => {
         <div className='w-[90%] flex justify-between items-center'>
           <div className='flex items-center justify-center'>
             <div className='md:hidden relative'><button onClick={() => SetShowMenu(!showMenu)}><LucideMenu /></button></div>
-            <Link to="/" className='flex items-center mx-22 md:mx-0 md:gap-2'>
-              <NotebookPen size={30} className='text-blue-600' />
-              <span className='text-lg'>NotiePad</span>
+            <Link to="/" className='flex items-center mx-22 md:mx-0 gap-4 md:gap-2'>
+              <div className='bg-gradient-to-r from-blue-500 to-purple-600 p-2 rounded-xl'>
+                  <FileText size={24} className='text-white' />
+                </div>
+                <div className="md:flex md:flex-col md:items-start md:gap-0.5">
+                  <h1 className="text-xl font-bold text-gray-900">NotePad</h1>
+                  <p className="text-sm hidden md:block text-gray-600">Collaborative workspace</p>
+                </div>
             </Link>
           </div>
           <div className='flex flex-row gap-3 justify-center items-center'>
-            <div className='md:flex md:items-center'><button onClick={() => { SetTheme(prev => !prev) }}>{theme ? <Sun size={30} className='text-yellow-400' /> : <Moon size={30} className='text-blue-600' />}</button></div>
+            {/* <div className='md:flex md:items-center'><button onClick={() => { SetTheme(prev => !prev) }}>{theme ? <Sun size={30} className='text-yellow-400' /> : <Moon size={30} className='text-blue-600' />}</button></div> */}
             <div className='md:flex hidden md:gap-4 text-xl' id='nav-links'>
               <Link to="/home" className="group relative transform transition-transform duration-300 hover:scale-110">
                 <span className="transition-colors duration-300 group-hover:text-blue-600">DashBoard</span>

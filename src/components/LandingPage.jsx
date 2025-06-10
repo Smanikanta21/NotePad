@@ -143,7 +143,7 @@ const LandingPage = () => {
                                 <div className="w-full max-w-md">
                                     <p className="mb-2 text-indigo-800 font-semibold text-center lg:text-left">Sign up to our newsletter ↓</p>
                                     <form className="flex flex-col sm:flex-row items-center gap-3">
-                                        <input type="email" placeholder="Email address" className="flex-1 px-5 py-3 rounded-full border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 shadow" />
+                                        <input type="email" placeholder="Email address" className="flex-1 px-5 py-3 rounded-full border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 shadow w-full" />
                                         <button type="submit" className="bg-blue-600 text-white px-6 py-3 rounded-full font-semibold hover:bg-blue-700 transition">Sign up today</button>
                                     </form>
                                 </div>
