@@ -1,3 +1,4 @@
+
 import { Notebook } from "lucide-react";
 import bg from '../assets/bg-assets.jpg'
 import instagram from '../assets/insta.png'

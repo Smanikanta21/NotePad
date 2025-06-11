@@ -1,20 +1,37 @@
-import { React,useState } from 'react'
+import { React,useState,useEffect } from 'react'
 import bg from '../assets/bg-assets.jpg'
 import google from '../assets/google.png'
 import github from '../assets/github.png'
 import { LogIn,EyeClosed,Eye } from 'lucide-react'
-// import { supabase } from '../server/suparbase';
+import { supabase } from '../server/supabase';
 import { BrowserRouter,Link, useNavigate } from 'react-router-dom'
 
 const SignupPage = () => {
   const nav = useNavigate();
+
   const[name,setName] = useState('')
   const[email,setEmail] = useState('')
   const[password,setPassword] = useState('')
   const[confPassword,setConfPassword] = useState('')
   const[showPassword,setShowPassword] = useState(false)
-    const HandleGooglesignIn= async () =>{
-
+  
+    useEffect(() => {
+    const checkSession = async () => {
+        const { data: { session } } = await supabase.auth.getSession();
+        if (session?.user) {
+          console.log("User is logged in:", session.user.email);
+          nav('/home');
+        }
+        }
+        checkSession();
+    }, [])
+  
+    const HandleGooglesignIn = async () => {
+      const { error } = await supabase.auth.signInWithOAuth({ provider: 'google' });
+      console.log("Google sign-in initiated");
+      if (error) {
+        console.error("Google sign-in error:", error.message);
+      }
     }
 
   const CreateSignUp = async () => {

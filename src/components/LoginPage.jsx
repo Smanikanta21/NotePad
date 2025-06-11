@@ -1,23 +1,70 @@
-import { React, useState } from 'react'
+import { React, useEffect, useState } from 'react'
 import bg from '../assets/bg-assets.jpg'
 import google from '../assets/google.png'
 import github from '../assets/github.png'
 import { Eye, EyeClosed, UserRound } from 'lucide-react'
 import { Link, useNavigate } from 'react-router-dom'
-// import { supabase } from '../server/suparbase';
+import { supabase } from '../server/supabase';
+import { SignInWithEmail,googleSignIn } from '../lib/auth'
 const LoginPage = () => {
     const nav = useNavigate();
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
 
+    const [loading, setLoading] = useState(false);
+
+    
     const [showPassword, setShowPassword] = useState(false);
+    useEffect(() => {
+        const checkSession = async () => {
+            const { data: { session } } = await supabase.auth.getSession();
+            if (session?.user) {
+                console.log("User is logged in:", session.user.email);
+                nav('/home');
+            }
+            }
+            checkSession();
+    }, [])
+
 
     const HandleGooglesignIn = async () => {
-
-
+        setLoading(true);
+        try {
+            await supabase.auth.signInWithOAuth({
+                provider: 'google',
+                options: {
+                    redirectTo: 'http://localhost:5173/home',
+                    redirectTo: 'https://note-pad-red.vercel.app//home'
+                }
+            });
+            console.log("Google sign-in initiated");
+        } catch (error) {
+            console.error("Google sign-in error:", error.message);
+            console.log('error', error);
+        } finally {
+            setLoading(false);
+        }
     }
 
-    const HandleLoginbutton = () => {
-        nav('/home')
+    const HandleLoginbutton = async () => {
+        setLoading(true);
+        const { success, data, error } = await SignInWithEmail(email, password);
+        setLoading(false);
+        if (error) {
+            console.error("Login error:", error.message);
+        } else if (success) {
+            window.location.href = '/home';
+        }
     }
+
+
+    if (loading) {
+    return (
+        <div className="min-h-screen flex items-center justify-center bg-white">
+            <div className="animate-spin rounded-full h-16 w-16 border-t-4 border-blue-500 border-solid"></div>
+        </div>
+    );
+}
     return (
         <div>
             <div className='z-10 md:p-5 fixed md:-top-72 md:flex md:justify-center w-full'> <img src={bg} className='md:w-[70vw]' alt="" /></div>

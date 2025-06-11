@@ -1,6 +1,7 @@
 import { React, useState, useEffect } from 'react'
 import { LucideMenu, Sun, Moon, Ellipsis, FileText } from 'lucide-react'
 import { Link } from 'react-router-dom'
+import { signOut } from '../lib/auth'
 const Nav = () => {
   const [theme, SetTheme] = useState(false)
   const [showMenu, SetShowMenu] = useState(false)
@@ -20,7 +21,7 @@ const Nav = () => {
   }, [theme])
   return (
     <div className='flex flex-row justify-center items-center mt-4 fixed top-0 left-0 right-0'>
-      <div className={`md:flex backdrop-blur-sm text-2xl font-medium items-center w-full max-w-6xl flex-row md:items-center md:justify-between z-10 md:text-3xl px-4 py-2 rounded-3xl shadow-2xl ${theme ? "bg-transparent text-white" : "bg-transparent text-black"}`}>
+      <div className={`md:flex backdrop-blur-sm text-2xl font-medium items-center w-full max-w-6xl flex-row md:items-center md:justify-between z-10 md:text-3xl px-4 py-2 rounded-3xl shadow-2xl bg-transparent`}>
         <div className='w-[90%] flex justify-between items-center'>
           <div className='flex items-center justify-center'>
             <div className='md:hidden relative'><button onClick={() => SetShowMenu(!showMenu)}><LucideMenu /></button></div>
@@ -49,6 +50,18 @@ const Nav = () => {
                 <span className="transition-colors duration-300 group-hover:text-blue-600">Settings</span>
                 <span className="absolute left-0 bottom-0 h-0.5 w-0 bg-blue-600 transition-all duration-300 group-hover:w-full"></span>
               </Link>
+              <button
+                className='border'
+                onClick={async () => {
+                  
+                  const result = await signOut();
+                  if (result.success) {
+                    window.location.href = '/login';
+                  }
+                }}
+              >
+                SignOut
+              </button>
             </div>
           </div>
         </div>
