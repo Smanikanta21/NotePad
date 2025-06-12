@@ -19,13 +19,12 @@ const LoginPage = () => {
     const HandleGooglesignIn = async () => {
         setLoading(true);
         try {
-            const { error } = await supabase.auth.signInWithOAuth({
+            await supabase.auth.signInWithOAuth({
                 provider: 'google',
                 options: {
-                    redirectTo: window.location.origin + '/home'
+                    redirectTo: 'http://localhost:5173/home'
                 }
             });
-            if (error) throw error;
             console.log("Google sign-in initiated");
         } catch (error) {
             console.error("Google sign-in error:", error.message);
@@ -63,21 +62,9 @@ const LoginPage = () => {
                 <div className='flex  md:flex-row flex-col justify-evenly rounded-xl md:rounded-none px-16 p-4 md:p-8 w-[90vw] md:w-[55vw] lg:w-[50vw] h-[60vh] md:h-[50vh] backdrop-blur-3xl shadow-xl' >
                     <div className='flex flex-col justify-center items-center gap-4 w-full md:w-auto'>
                         <h1 className='text-4xl font-bold'>Login</h1>
-                        <input
-                            type="email"
-                            placeholder='Enter Email'
-                            className='border-b py-2.5 md:w-[22vw] lg:w-[18vw] text-xl text-start transition duration-300 ease-in-out focus:ring-2 focus:ring-blue-400'
-                            value={email}
-                            onChange={e => setEmail(e.target.value)}
-                        />
+                        <input type="email" placeholder='Enter Email' className='border-b w-full py-2.5 md:w-[22vw] lg:w-[18vw] text-xl text-start transition duration-300 ease-in-out focus:ring-2 focus:ring-blue-400' value={email} onChange={e => setEmail(e.target.value)}/>
                         <div className="relative w-full md:w-[22vw] lg:w-[18vw]">
-                            <input
-                                type={showPassword ? "text" : "password"}
-                                placeholder="Enter Password"
-                                className="border-b py-2.5 text-xl w-full md:w-[18vw] text-start transition duration-300 ease-in-out focus:ring-2 focus:ring-blue-400"
-                                value={password}
-                                onChange={e => setPassword(e.target.value)}
-                            />
+                            <input type={showPassword ? "text" : "password"} placeholder="Enter Password" className="border-b py-2.5 text-xl w-full md:w-[18vw] text-start transition duration-300 ease-in-out focus:ring-2 focus:ring-blue-400" value={password} onChange={e => setPassword(e.target.value)}/>
                             <button type="button" className="absolute right-0 top-2 text-sm text-black" onClick={() => setShowPassword(prev => !prev)}>{showPassword ? <EyeClosed /> : <Eye />}</button>
                         </div>
                         <div className='flex'>
@@ -101,12 +88,7 @@ const LoginPage = () => {
                     </div>
                     <div className='md:hidden mt-5 px-4 w-full flex flex-col items-center justify-center gap-4'>
                         <div className='flex gap-6 p-2'>
-                            <button
-                                onClick={HandleGooglesignIn}
-                                className='w-8 transition-all duration-300 ease-in-out hover:opacity-90 hover:scale-115'
-                            >
-                                <img src={google} alt="Google" />
-                            </button>
+                            <img src={google} onClick={HandleGooglesignIn} className='w-8 shadow-2xl transition-all duration-300 ease-in-out hover:opacity-90 hover:scale-105' alt="" />
                             <img src={github} alt="" className='w-8 shadow-2xl transition-all duration-300 ease-in-out hover:opacity-90 hover:scale-105' />
                         </div>
                         <div className='flex flex-col w-full items-center'>

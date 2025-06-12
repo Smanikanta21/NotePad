@@ -84,14 +84,14 @@ const SignupPage = () => {
           {/* Input tags */}
           <div className='flex flex-col justify-center items-center gap-4'>
             <h1 className='text-4xl font-bold'>Sign Up</h1>
-            <input type="text" placeholder='Enter Name' onChange={(e) => setName(e.target.value)} className='border-b p-2.5 w-[75vw] text-lg md:w-[18vw] text-start transition duration-300 ease-in-out focus:ring-2 focus:ring-blue-400' />
-            <input type="email" placeholder='Enter Email' onChange={(e) => setEmail(e.target.value)} className='border-b p-2.5 w-[75vw] text-lg md:w-[18vw] text-start transition duration-300 ease-in-out focus:ring-2 focus:ring-blue-400' />
+            <input type="text" placeholder='Enter Name' onChange={(e) => setName(e.target.value)} className='border-b p-2.5 w-full text-lg md:w-[18vw] text-start transition duration-300 ease-in-out focus:ring-2 focus:ring-blue-400' />
+            <input type="email" placeholder='Enter Email' onChange={(e) => setEmail(e.target.value)} className='border-b p-2.5 w-full text-lg md:w-[18vw] text-start transition duration-300 ease-in-out focus:ring-2 focus:ring-blue-400' />
             <div className="relative w-full md:w-[22vw] lg:w-[18vw]">
-              <input type={showPassword ? "text" : "password"} placeholder="Enter Password" onChange={(e) => setPassword(e.target.value)} className="border-b p-2.5 text-lg w-[75vw] md:w-[18vw] text-start transition duration-300 ease-in-out focus:ring-2 focus:ring-blue-400" />
+              <input type={showPassword ? "text" : "password"} placeholder="Enter Password" onChange={(e) => setPassword(e.target.value)} className="border-b p-2.5 text-lg w-full md:w-[18vw] text-start transition duration-300 ease-in-out focus:ring-2 focus:ring-blue-400" />
               <button type="button" className="absolute right-0 top-2 text-sm text-black" onClick={() => setShowPassword(prev => !prev)}>{showPassword ? <EyeClosed /> : <Eye />}</button>
             </div>
             <div className="relative w-full md:w-[22vw] lg:w-[18vw]">
-              <input type={showPassword ? "text" : "password"} placeholder="Confirm Password" onChange={(e) => setConfPassword(e.target.value)} className="border-b p-2.5 text-lg w-[75vw] md:w-[18vw] text-start transition duration-300 ease-in-out focus:ring-2 focus:ring-blue-400" />
+              <input type={showPassword ? "text" : "password"} placeholder="Confirm Password" onChange={(e) => setConfPassword(e.target.value)} className="border-b p-2.5 text-lg w-full md:w-[18vw] text-start transition duration-300 ease-in-out focus:ring-2 focus:ring-blue-400" />
               <button type="button" className="absolute right-0 top-2 text-sm text-black" onClick={() => setShowPassword(prev => !prev)}>{showPassword ? <EyeClosed /> : <Eye />}</button>
             </div>
             <button onClick={CreateSignUp} className='py-3 px-6 w-[60vw] md:w-auto rounded-xl text-xl bg-blue-600 mt-3 md:m-0 text-white shadow-xl hover:shadow-2xl hover:cursor-pointer hover:scale-115 hover:opacity-90 transition-transform duration-300 ease-in-out'>Create Account</button>
