@@ -6,6 +6,7 @@ export async function SignUpWithEmail(email,password){
         console.error('Error signing up:', error);
         return { success: false, error: error.message };
     }
+    return { success: true, data };
 }
 
 export async function SignInWithEmail(email,password){
