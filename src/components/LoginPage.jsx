@@ -22,7 +22,8 @@ const LoginPage = () => {
             await supabase.auth.signInWithOAuth({
                 provider: 'google',
                 options: {
-                    redirectTo: 'http://localhost:5173/home'
+                    redirectTo: 'http://localhost:5173/home',
+                    redirectTo: 'https://note-pad-red.vercel.app/home'
                 }
             });
             console.log("Google sign-in initiated");
