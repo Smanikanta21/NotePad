@@ -22,7 +22,7 @@ export async function googleSignIn(){
     const { error } = await supabase.auth.signInWithOAuth({
         provider: 'google',
         options: {
-            redirectTo: window.location.origin
+            redirectTo: window.location.origin + '/auth/callback'
         }
     });
 }
@@ -37,3 +37,11 @@ export async function signOut(){
 }   
 
 
+export async function getCurrentSession() {
+  const { data, error } = await supabase.auth.getSession();
+  if (error) {
+    console.error("Error fetching session:", error);
+    return null;
+  }
+  return data.session;
+}
