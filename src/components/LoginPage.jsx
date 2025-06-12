@@ -19,12 +19,13 @@ const LoginPage = () => {
     const HandleGooglesignIn = async () => {
         setLoading(true);
         try {
-            await supabase.auth.signInWithOAuth({
+            const { error } = await supabase.auth.signInWithOAuth({
                 provider: 'google',
                 options: {
-                    redirectTo: 'http://localhost:5173/home'
+                    redirectTo: window.location.origin + '/home'
                 }
             });
+            if (error) throw error;
             console.log("Google sign-in initiated");
         } catch (error) {
             console.error("Google sign-in error:", error.message);
@@ -100,7 +101,12 @@ const LoginPage = () => {
                     </div>
                     <div className='md:hidden mt-5 px-4 w-full flex flex-col items-center justify-center gap-4'>
                         <div className='flex gap-6 p-2'>
-                            <img src={google} onClick={HandleGooglesignIn} className='w-8 shadow-2xl transition-all duration-300 ease-in-out hover:opacity-90 hover:scale-105' alt="" />
+                            <button
+                                onClick={HandleGooglesignIn}
+                                className='w-8 transition-all duration-300 ease-in-out hover:opacity-90 hover:scale-115'
+                            >
+                                <img src={google} alt="Google" />
+                            </button>
                             <img src={github} alt="" className='w-8 shadow-2xl transition-all duration-300 ease-in-out hover:opacity-90 hover:scale-105' />
                         </div>
                         <div className='flex flex-col w-full items-center'>

@@ -34,7 +34,7 @@ const SignupPage = () => {
     const { error } = await supabase.auth.signInWithOAuth({
       provider: 'google',
       options: {
-        redirectTo: 'http://localhost:5173/home'
+        redirectTo: window.location.origin + '/home'
       }
     });
     setLoading(false)
@@ -108,7 +108,12 @@ const SignupPage = () => {
           </div>
           <div className='md:hidden gap-3 mt-5 flex flex-col items-center justify-center w-full px-4'>
             <div className='flex gap-6'>
-              <img src={google} className='w-8 transition-all duration-300 ease-in-out hover:opacity-90 hover:scale-115' onClick={HandleGooglesignIn} alt="Google" />
+              <button
+                onClick={HandleGooglesignIn}
+                className='w-8 transition-all duration-300 ease-in-out hover:opacity-90 hover:scale-115'
+              >
+                <img src={google} alt="Google" />
+              </button>
               <img src={github} alt="GitHub" className='w-8 transition-all duration-300 ease-in-out hover:opacity-90 hover:scale-115' />
             </div>
             <div className='flex flex-col'>
