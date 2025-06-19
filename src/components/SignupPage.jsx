@@ -3,9 +3,11 @@ import bg from '../assets/bg-assets.jpg'
 import google from '../assets/google.png'
 import github from '../assets/github.png'
 import { LogIn, EyeClosed, Eye } from 'lucide-react'
-import { supabase } from '../server/supabase';
-import { SignUpWithEmail } from '../lib/auth'
+// import { supabase } from '../server/supabase';
+// import { SignUpWithEmail } from '../lib/auth'
 import { BrowserRouter, Link, useNavigate } from 'react-router-dom'
+import { set } from 'mongoose'
+import axios from 'axios'
 
 const SignupPage = () => {
   const nav = useNavigate();
@@ -18,48 +20,25 @@ const SignupPage = () => {
   const [confPassword, setConfPassword] = useState('')
   const [showPassword, setShowPassword] = useState(false)
 
-  useEffect(() => {
-    const checkSession = async () => {
-      const { data: { session } } = await supabase.auth.getSession();
-      if (session?.user) {
-        console.log("User is logged in:", session.user.email);
-        nav('/home');
-      }
-    }
-    checkSession();
-  }, [])
 
   const HandleGooglesignIn = async () => {
     setLoading(true)
-    const { error } = await supabase.auth.signInWithOAuth({
-      provider: 'google',
-      options: {
-        redirectTo: window.location.origin + '/home',
-        redirectTo: 'https://note-pad-red.vercel.app/home'
-      }
-    });
+    window.location.href = 'http://localhost:5000/auth/google';
     setLoading(false)
-    console.log("Google sign-in initiated");
-    if (error) {
-      console.error("Google sign-in error:", error.message);
-    }
   }
 
   const CreateSignUp = async () => {
-    if (!name || !email || !password || !confPassword) {
-      alert("Please fill in all fields.");
-      return;
-    }
-    if (password !== confPassword) {
-      alert("Passwords do not match.");
-      return;
-    }
     setLoading(true)
-    const { success, error } = await SignUpWithEmail(email, password);
+    try{
+      await axios.post('http://localhost:5000/api/register', { name, email, password });
+    nav('/home')
     setLoading(false)
-    if(success){
-      nav('/home')
+    }catch(error){
+      console.error('Error signing up:', error);
+      setLoading(false)
+      alert('Error signing up, please try again.')
     }
+
   };
 
 

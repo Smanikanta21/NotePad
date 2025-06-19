@@ -3,10 +3,9 @@ import bg from '../assets/bg-assets.jpg'
 import google from '../assets/google.png'
 import github from '../assets/github.png'
 import { Eye, EyeClosed, UserRound } from 'lucide-react'
-import { Link, redirect } from 'react-router-dom'
-import { supabase } from '../server/supabase';
-import { SignInWithEmail,getCurrentSession } from '../lib/auth'
+import { Link, redirect,useNavigate } from 'react-router-dom'
 const LoginPage = () => {
+    const nav = useNavigate();
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
@@ -15,45 +14,17 @@ const LoginPage = () => {
 
     const [showPassword, setShowPassword] = useState(false);
 
-    useEffect(() => {
-        const checkSession = async () => {
-            const session = await getCurrentSession();
-            if (!session) {
-                navigate('/login');
-            }
-        };
-        checkSession();
-    }, []);
-
     const HandleGooglesignIn = async () => {
         setLoading(true);
-        try {
-            await supabase.auth.signInWithOAuth({
-                provider: 'google',
-                options: {
-                    redirectTo: 'https://note-pad-red.vercel.app/home',
-                    redirectTo: window.location.origin + '/auth/callback'
-                }
-            });
-            console.log("Google sign-in initiated");
-        } catch (error) {
-            console.error("Google sign-in error:", error.message);
-            console.log('error', error);
-        } finally {
-            setLoading(false);
+        window.location.href = 'http://localhost:5000/auth/google';
+        setLoading(false);
 
-        }
     }
 
     const HandleLoginbutton = async () => {
         setLoading(true);
-        const { success, error } = await SignInWithEmail(email, password);
+        nav('/home');
         setLoading(false);
-        if (error) {
-            console.error("Login error:", error.message);
-        } else if (success) {
-            window.location.href = '/home';
-        }
     }
 
 

@@ -15,7 +15,7 @@ const LandingPage = () => {
                     <div className="absolute inset-0"></div>
                 </div>
                 <div className="relative z-10">
-                    <div className="fixed top-0 left-0 w-full z-30 backdrop-blur-sm shadow-md border-b border-white/20 pb-3.5">
+                    <div className="fixed top-0 left-0 w-full z-30 backdrop-blur-sm shadow-md border-b border-white/20 pb-1">
                         <nav className="flex md:ml-11 w-full md:w-11/12 md:flex-row gap-4 md:gap-7 justify-center pt-6 md:justify-around md:pt-2 flex-col items-center">
                             <div className="flex gap-5 flex-row justify-center items-center">
                                 <Notebook className="bg-clip-text bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500" size={30} />
@@ -40,7 +40,7 @@ const LandingPage = () => {
                                 </a>
                             </div>
                             <div className="hidden md:block hover:shadow-2xl hover:scale-105 transition duration-300 items-center p-3 text-white rounded-xl bg-blue-600">
-                                <Link className="text-xl" to="/login">Get Started</Link>
+                                <Link className="text-md" to="/login">Get Started</Link>
                             </div>
                         </nav>
                     </div>
@@ -90,9 +90,6 @@ const LandingPage = () => {
                             <div className="p-6 bg-white shadow-md rounded-xl hover:shadow-xl transition">
                                 <p className="font-semibold text-pink-600">React Router</p>
                             </div>
-                            {/* <div className="p-6 bg-white shadow-md rounded-xl hover:shadow-xl transition">
-                                <p className="font-semibold text-indigo-700">Authlib / Flask (alt auth)</p>
-                            </div> */}
                             <div className="p-6 bg-white shadow-md rounded-xl hover:shadow-xl transition">
                                 <p className="font-semibold text-purple-700">Netlify / Vercel</p>
                             </div>
@@ -108,7 +105,7 @@ const LandingPage = () => {
                                         <h1 className="font-bold text-3xl">Contact Info</h1>
                                         <p>Email: siraparapuabhinay21@gmail.com</p>
                                         <div className="flex justify-center gap-4">
-                                            <a href="https://www.instagram.com/abhi._.nay"><img src={instagram} alt="Instagram" className="rounded-lg w-10 h-10 hover:scale-120 cursor-pointer transition-transform" /></a>
+                                            <div className="transition-transform hover:scale-110 flex justify-center items-center flex-col"><a href="https://www.instagram.com/abhi._.nay"><img src={instagram} alt="Instagram" className="rounded-lg w-10 h-10 cursor-pointer" /></a><p className="hidden hover:flex">Instagram</p></div>
                                             <a href="https://github.com/Smanikanta21"><img src={github} alt="GitHub" className="rounded-lg w-10 h-10 hover:scale-120 cursor-pointer transition-transform" /></a>
                                             <a href=""><img src={linkedin} alt="LinkedIn" className="rounded-lg w-10 h-10 hover:scale-120 cursor-pointer transition-transform" /></a>
                                         </div>

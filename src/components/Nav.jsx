@@ -1,7 +1,7 @@
 import { React, useState, useEffect } from 'react'
 import { LucideMenu, Sun, Moon, Ellipsis, FileText } from 'lucide-react'
 import { Link } from 'react-router-dom'
-import { signOut } from '../lib/auth'
+// import { signOut } from '../lib/auth'
 const Nav = () => {
   const [theme, SetTheme] = useState(false)
   const [showMenu, SetShowMenu] = useState(false)
@@ -53,11 +53,8 @@ const Nav = () => {
               <button
                 className='text-red-700 cursor-pointer hover:bg-red-600 hover:text-white py-1 px-2.5 rounded-md transition-colors duration-400'
                 onClick={async () => {
-                const result = await signOut();
-                  if (result.success) {
                     console.log('signedout successfull')
                     window.location.href = '/login';
-                  }
                 }}>SignOut</button>
             </div>
           </div>
