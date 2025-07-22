@@ -4,7 +4,7 @@ import Home from './components/Home'
 import Login from './components/LoginPage'
 import Signup from './components/SignupPage'
 import LandingPage from './components/LandingPage'
-import Setting from './components/Settings'
+import Setting from './components/settings'
 import { BrowserRouter,Routes,Route,Outlet } from 'react-router-dom'
 function App() {
 
