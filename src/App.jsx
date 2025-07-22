@@ -4,7 +4,7 @@ import Home from './components/Home'
 import Login from './components/LoginPage'
 import Signup from './components/SignupPage'
 import LandingPage from './components/LandingPage'
-import SettingsPage from './components/Settings'
+import Setting from './components/Settings'
 import { BrowserRouter,Routes,Route,Outlet } from 'react-router-dom'
 function App() {
 
@@ -16,7 +16,7 @@ function App() {
 
         <Route element={<><Nav /><Outlet /></>}>
           <Route path='/home' element={<Home />} />
-          <Route path='/settings' element={<SettingsPage/>}/>
+          <Route path='/settings' element={<Setting/>}/>
           <Route path='/contact' element={<div>Contact</div>} />
         </Route>
       </Routes>
