@@ -3,8 +3,6 @@ import bg from '../assets/bg-assets.jpg'
 import google from '../assets/google.png'
 import github from '../assets/github.png'
 import { LogIn, EyeClosed, Eye } from 'lucide-react'
-// import { supabase } from '../server/supabase';
-// import { SignUpWithEmail } from '../lib/auth'
 import { BrowserRouter, Link, useNavigate } from 'react-router-dom'
 import { set } from 'mongoose'
 import axios from 'axios'
