@@ -4,6 +4,7 @@ import google from '../assets/google.png'
 import github from '../assets/github.png'
 import { Eye, EyeClosed, UserRound } from 'lucide-react'
 import { Link, redirect,useNavigate } from 'react-router-dom'
+import axios from 'axios'
 const LoginPage = () => {
     const nav = useNavigate();
     const [email, setEmail] = useState('');
@@ -16,14 +17,22 @@ const LoginPage = () => {
 
     const HandleGooglesignIn = async () => {
         setLoading(true);
-        window.location.href = 'http://localhost:5000/auth/google';
+        // window.location.href = 'http://localhost:5000/auth/google';
         setLoading(false);
 
     }
 
     const HandleLoginbutton = async () => {
         setLoading(true);
-        nav('/home');
+        try{
+            const response = await axios.post('https://notepad-backend-3fo1.onrender.com/api/login', { email, password }, { withCredentials: true });
+            console.log('login successfull')
+            alert("Login successful");
+            nav('/home');
+        }catch(error){
+            console.error('Login failed:', error);
+            alert("Login failed. Please check your credentials.");
+        }
         setLoading(false);
     }
 

@@ -23,14 +23,14 @@ const SignupPage = () => {
 
   const HandleGooglesignIn = async () => {
     setLoading(true)
-    window.location.href = 'http://localhost:5000/auth/google';
+    // window.location.href = 'http://localhost:5000/auth/google';
     setLoading(false)
   }
 
   const CreateSignUp = async () => {
     setLoading(true)
     try{
-      await axios.post('http://localhost:5000/api/register', { name, email, password });
+      await axios.post('https://notepad-backend-3fo1.onrender.com/api/register', { name, email, password });
     nav('/home')
     setLoading(false)
     }catch(error){
