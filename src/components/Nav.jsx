@@ -1,6 +1,7 @@
 import { React, useState, useEffect } from 'react'
 import { LucideMenu, Sun, Moon, Ellipsis, FileText } from 'lucide-react'
 import { Link } from 'react-router-dom'
+import axios from 'axios'
 // import { signOut } from '../lib/auth'
 const Nav = () => {
   const [theme, SetTheme] = useState(false)
@@ -13,6 +14,19 @@ const Nav = () => {
     }
   }, []);
   const [mdMenu, setMdMenu] = useState(false)
+
+
+  const signout = async() =>{
+    try{
+      await axios.post('https://notepad-backend-3fo1.onrender.com/auth/logout', { withCredentials: true });
+      console.log('signedout successfull')
+      window.location.href = '/login';
+    }
+    catch(error){
+      console.error('Error signing out:', error);
+      alert('Error signing out, please try again.');
+    }
+  }
 
   useEffect(() => {
     document.body.classList.remove('light', 'dark')
@@ -52,10 +66,7 @@ const Nav = () => {
               </Link>
               <button
                 className='text-red-700 cursor-pointer hover:bg-red-600 hover:text-white py-1 px-2.5 rounded-md transition-colors duration-400'
-                onClick={async () => {
-                    console.log('signedout successfull')
-                    window.location.href = '/login';
-                }}>SignOut</button>
+                onClick={async () => { signout() }}>SignOut</button>
             </div>
           </div>
         </div>

@@ -17,7 +17,7 @@ const LoginPage = () => {
 
     const HandleGooglesignIn = async () => {
         setLoading(true);
-        // window.location.href = 'http://localhost:5000/auth/google';
+        window.open('https://notepad-backend-3fo1.onrender.com/auth/google', '_self');
         setLoading(false);
 
     }
@@ -25,7 +25,7 @@ const LoginPage = () => {
     const HandleLoginbutton = async () => {
         setLoading(true);
         try{
-            const response = await axios.post('https://notepad-backend-3fo1.onrender.com/api/login', { email, password }, { withCredentials: true });
+            const response = await axios.post('https://notepad-backend-3fo1.onrender.com/auth/login', { email, password }, { withCredentials: true });
             console.log('login successfull')
             alert("Login successful");
             nav('/home');

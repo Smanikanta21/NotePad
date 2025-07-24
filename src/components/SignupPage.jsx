@@ -23,7 +23,7 @@ const SignupPage = () => {
 
   const HandleGooglesignIn = async () => {
     setLoading(true)
-    // window.location.href = 'http://localhost:5000/auth/google';
+    window.open('https://notepad-backend-3fo1.onrender.com/auth/google', '_self');
     setLoading(false)
   }
 
