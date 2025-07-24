@@ -30,13 +30,13 @@ const SignupPage = () => {
   const CreateSignUp = async () => {
     setLoading(true)
     try{
-      await axios.post('https://notepad-backend-3fo1.onrender.com/api/register', { name, email, password });
+      await axios.post('https://notepad-backend-3fo1.onrender.com/auth/signup', { name, email, password });
     nav('/home')
     setLoading(false)
     }catch(error){
       console.error('Error signing up:', error);
       setLoading(false)
-      alert('Error signing up, please try again.')
+      alert('Error signing up, please try again.', error.message);
     }
 
   };
@@ -44,7 +44,7 @@ const SignupPage = () => {
 
     if (loading) {
         return (
-            <div className="min-h-screen flex items-center justify-center bg-none">
+            <div className="min-h-screen flex items-center justify-center bg-transparent">
                 <div className="animate-spin rounded-full h-16 w-16 border-t-4 border-blue-500 border-solid"></div>
             </div>
         );
