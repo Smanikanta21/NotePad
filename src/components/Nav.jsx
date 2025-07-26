@@ -76,6 +76,9 @@ const Nav = () => {
           <Link to="/">Home</Link>
           <Link to="/contact">Contact</Link>
           <Link to="/settings">Settings</Link>
+          <button
+            className='text-red-700 cursor-pointer hover:bg-red-600 hover:text-white py-1 px-2.5 rounded-md transition-colors duration-400'
+            onClick={async () => { signout() }}>SignOut</button>
         </div>
       )}
     </div>
