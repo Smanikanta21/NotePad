@@ -52,11 +52,25 @@ const Home = () => {
                     </div>
                     <div className='flex justify-end mt-4 gap-2'>
                       <button
-                        onClick={() => {const value = document.getElementById('tittle').value.trim()
+                        onClick={async() => {const value = document.getElementById('tittle').value.trim()
                           if(value.length === 0){
                             alert('Please enter a tittle')
                           }else{
-                           setModal(false)}}}
+                           setModal(false)
+                          }
+
+                          try{
+                            const res = await fetch('https://notepad-backend-3fo1.onrender.com/notes/create',{
+                              method:'POST',
+                              headers:{'Content-Type': 'application/json'},
+                              credentials: 'include',
+                              body: JSON.stringify({ tittle: value })
+                            })
+                          }catch(error){
+                            console.error('Error creating note:', error.message);
+                            alert('Error creating note, please try again.');
+                          }
+                        }}
                         className='bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-600 cursor-pointer'> Save</button>
                       <button
                         onClick={() => setModal(false)}
