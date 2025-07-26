@@ -30,7 +30,7 @@ const SignupPage = () => {
     setLoading(true)
     try{
       await axios.post('https://notepad-backend-3fo1.onrender.com/auth/signup', { name, email, password });
-    nav('/login')
+    nav('/home')
     setLoading(false)
     }catch(error){
       console.error('Error signing up:', error);
