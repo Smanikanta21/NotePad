@@ -23,7 +23,7 @@ const LoginPage = () => {
     const HandleLoginbutton = async () => {
         setLoading(true);
         try{
-            const response = await axios.post('https://notepad-backend-3fo1.onrender.com/auth/login', { email, password }, { withCredentials: true });
+            const response = await axios.post('https://notepad-backend-3fo1.onrender.com/auth/login', { email, password }, { withCredentials: true },{credentials: 'include'});
             console.log('login successfull')
             alert("Login successful");
             nav('/home');
