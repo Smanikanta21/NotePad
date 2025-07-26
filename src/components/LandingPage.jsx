@@ -1,12 +1,13 @@
 
-import { Notebook } from "lucide-react";
+import { Notebook,LucideMenu } from "lucide-react";
 import bg from '../assets/bg-assets.jpg'
 import instagram from '../assets/insta.png'
 import github from '../assets/github.png'
 import linkedin from '../assets/linkedin.png'
 import { useNavigate,Link } from "react-router-dom";
+import { useState } from "react";
 const LandingPage = () => {
-    const navigate = useNavigate();
+    const[menu,setMenu] = useState(false)
     return (
         <>
             <div className="relative min-h-screen">
@@ -16,17 +17,20 @@ const LandingPage = () => {
                 </div>
                 <div className="relative z-10">
                     <div className="fixed top-0 left-0 w-full z-30 backdrop-blur-sm shadow-md border-b border-white/20 pb-1">
-                        <nav className="flex md:ml-11 w-full md:w-11/12 md:flex-row gap-4 md:gap-7 justify-center pt-6 md:justify-around md:pt-2 flex-col items-center">
-                            <div className="flex gap-5 flex-row justify-center items-center">
-                                <Notebook className="bg-clip-text bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500" size={30} />
-                                <a href="#" className="text-4xl font-bold">NotePad</a>
-                            </div>
+                        <nav className="flex md:ml-11 w-full md:w-11/12 gap-4 md:gap-7 pt-6 md:justify-around md:pt-2 flex-row items-center">
+                            <div className="md:hidden flex float-left"><LucideMenu size={30} onClick={() => setMenu(!menu)} /></div>
+                        <div className="flex gap-5 flex-row w-full md:w-auto justify-center items-center">
+                            <Notebook size={30} />
+                            <a href="#" className="text-4xl font-bold">NotePad</a>
+                        </div>
 
-                            <div className="flex md:hidden items-center gap-8 font-mono text-xl text-blue-600">
+                            {menu && (
+                            <div className="absolute transition-all duration-200 translate-y-3.5 top-16 flex py-6  flex-col justify-center w-full bg-transparent backdrop-blur-sm md:hidden items-center gap-4 font-mono text-xl text-blue-600">
                                 <a href="#About">About</a>
                                 <a href="#Stacks">Stacks</a>
                                 <a href="#Contact">Contact</a>
                             </div>
+                            )}
 
                             <div className="md:flex hidden items-center gap-11 font-mono text-3xl text-blue-600">
                                 <a href="#About" className="group transition duration-300 transform hover:scale-110 relative cursor-pointer">
