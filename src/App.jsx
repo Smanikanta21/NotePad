@@ -4,12 +4,14 @@ import Home from './components/Home'
 import Login from './components/LoginPage'
 import Signup from './components/SignupPage'
 import LandingPage from './components/LandingPage'
+import { ToastContainer } from 'react-toastify'
 import Setting from './components/settings'
 import Profile from './components/Profile'
 import { BrowserRouter,Routes,Route,Outlet } from 'react-router-dom'
 function App() {
 
   return (
+    <>
       <Routes>
         <Route path='/' element={<LandingPage />} />
         <Route path='/login' element={<Login />} />
@@ -21,6 +23,8 @@ function App() {
           <Route path='/contact' element={<div>Contact</div>} />
         </Route>
       </Routes>
+      <ToastContainer position="top-right" autoClose={3000} />
+    </>
   )
 }
 

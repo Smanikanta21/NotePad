@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from 'react'
 import { useNavigate } from 'react-router-dom'
-
+import { toast } from 'react-toastify'
 const Home = () => {
   const [modal, setModal] = useState(false)
   const nav = useNavigate();
@@ -18,6 +18,7 @@ const Home = () => {
           setBringNotes(data);
         }
       }catch(error){
+        toast.error('Error fetching notes:', error);
         console.error('Error fetching notes:', error);
       }
     }
@@ -105,7 +106,7 @@ const Home = () => {
                           .getElementById("title")
                           .value.trim();
                         if (value.length === 0) {
-                          alert("Please enter a title");
+                          toast("Please enter a title");
                         } else {
                           setModal(false);
                         }
@@ -122,7 +123,7 @@ const Home = () => {
                           );
                         } catch (error) {
                           console.error("Error creating note:", error.message);
-                          alert("Error creating note, please try again.");
+                          toast.error("Error creating note, please try again.");
                         }
                       }}
                       className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-600 cursor-pointer"

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { User, Mail, Calendar, Camera, Edit3, Save, X, Settings, Shield, Bell } from 'lucide-react'
+import { toast } from 'react-toastify'
 
 const Profile = () => {
   const [user, setUser] = useState(null)
@@ -27,7 +28,7 @@ const Profile = () => {
         }
       } catch (err) {
         console.error('Error fetching user data:', err)
-        setErrorMsg('Network error occurred')
+        toast.error('Network error occurred')
       } finally {
         setLoading(false)
       }
@@ -74,7 +75,7 @@ const Profile = () => {
       }
     } catch (err) {
       console.error('Error updating profile:', err)
-      setErrorMsg('Network error occurred')
+      toast.error('Network error occurred')
     } finally {
       setSaving(false)
     }

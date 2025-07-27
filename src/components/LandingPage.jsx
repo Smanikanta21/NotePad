@@ -1,13 +1,13 @@
 
-import { Notebook,LucideMenu } from "lucide-react";
+import { Notebook, LucideMenu, X } from "lucide-react";
 import bg from '../assets/bg-assets.jpg'
 import instagram from '../assets/insta.png'
 import github from '../assets/github.png'
 import linkedin from '../assets/linkedin.png'
-import { useNavigate,Link } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { useState } from "react";
 const LandingPage = () => {
-    const[menu,setMenu] = useState(false)
+    const [menu, setMenu] = useState(false)
     return (
         <>
             <div className="relative min-h-screen">
@@ -18,29 +18,40 @@ const LandingPage = () => {
                 <div className="relative z-10">
                     <div className="fixed top-0 left-0 w-full z-30 backdrop-blur-sm shadow-md border-b border-white/20 pb-1">
                         <nav className="flex md:ml-11 w-full md:w-11/12 gap-4 md:gap-7 pt-6 md:justify-around md:pt-2 flex-row items-center">
-                            <div className="md:hidden flex float-left"><LucideMenu size={30} onClick={() => setMenu(!menu)} /></div>
-                        <div className="flex gap-5 flex-row w-full md:w-auto justify-center items-center">
-                            <Notebook size={30} />
-                            <a href="#" className="text-4xl font-bold">NotePad</a>
-                        </div>
-
-                            {menu && (
-                            <div className="absolute transition-all duration-200 translate-y-3.5 top-16 flex py-6  flex-col justify-center w-full bg-transparent backdrop-blur-sm md:hidden items-center gap-4 font-mono text-xl text-blue-600">
-                                <a href="#About">About</a>
-                                <a href="#Stacks">Stacks</a>
-                                <a href="#Contact">Contact</a>
+                            <div className="md:hidden fixed top-8 left-2">
+                                {menu ? (
+                                    <X size={30} onClick={() => setMenu(false)} />
+                                ) : (
+                                    <LucideMenu size={30} onClick={() => setMenu(true)} />
+                                )}
                             </div>
-                            )}
+
+                            <div className="flex gap-5 flex-col w-full md:w-auto justify-center items-center">
+                                <div className="flex flex-row gap-4 justify-center items-center">
+                                    <Notebook size={30} />
+                                    <a href="#" className="text-4xl font-bold">NotePad</a>
+                                </div>
+                                <div className="md:hidden flex flex-col items-center justify-center overflow-hidden transition-all duration-300 ease-in-out">
+                                    <div className={`flex flex-col gap-4 text-lg font-semibold text-gray-800 transform transition-all duration-300 ease-in-out ${menu ? 'scale-100 opacity-100 max-h-40' : 'scale-95 opacity-0 max-h-0'}`}>
+                                        <a href="#About">About</a>
+                                        <a href="#Stacks">Stacks</a>
+                                        <a href="#Contact">Contact</a>
+                                    </div>
+                                </div>
+                            </div>
+
+
+
 
                             <div className="md:flex hidden items-center gap-11 font-mono text-3xl text-blue-600">
                                 <a href="#About" className="group transition duration-300 transform hover:scale-110 relative cursor-pointer">
-                                  <span className="pb-1 border-b-2 border-transparent group-hover:border-blue-600 transition-all duration-300 hover:font-extrabold ">About</span>
+                                    <span className="pb-1 border-b-2 border-transparent group-hover:border-blue-600 transition-all duration-300 hover:font-extrabold ">About</span>
                                 </a>
                                 <a href="#Stacks" className="group transition duration-300 transform hover:scale-110 relative cursor-pointer">
-                                  <span className="pb-1 border-b-2 border-transparent group-hover:border-blue-600 transition-all duration-500 hover:font-extrabold ">Stacks</span>
+                                    <span className="pb-1 border-b-2 border-transparent group-hover:border-blue-600 transition-all duration-500 hover:font-extrabold ">Stacks</span>
                                 </a>
                                 <a href="#Contact" className="group transition duration-300 transform hover:scale-110 relative cursor-pointer">
-                                  <span className="pb-1 border-b-2 border-transparent group-hover:border-blue-600 transition-all duration-500 hover:font-extrabold ">Contact</span>
+                                    <span className="pb-1 border-b-2 border-transparent group-hover:border-blue-600 transition-all duration-500 hover:font-extrabold ">Contact</span>
                                 </a>
                             </div>
                             <div className="hidden md:block hover:shadow-2xl hover:scale-105 transition duration-300 items-center p-3 text-white rounded-xl bg-blue-600">
@@ -52,9 +63,9 @@ const LandingPage = () => {
                         <h1 className="text-5xl md:mt-0 mt-10 px-6 md:text-7xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 via-purple-500 to-pink-500">
                             Handwrite, brainstorm, and build ideas with your team — all in one beautiful, collaborative space
                         </h1>
-                            <div className="block md:hidden items-center p-3 text-white rounded-xl bg-blue-600">
-                                <Link className="text-xl " to="/login">Get Started</Link>
-                            </div>
+                        <div className="block md:hidden items-center p-3 text-white rounded-xl bg-blue-600">
+                            <Link className="text-xl " to="/login">Get Started</Link>
+                        </div>
                     </div>
 
                     <div id="About" className="relative z-10 py-36 lg:py-60 px-6 md:px-32 text-center">
@@ -117,7 +128,7 @@ const LandingPage = () => {
                                     <div className=" shadow-2xl h-[30vh] flex-col w-[30vw]  overflow-hidden rounded-br-full rounded-tr-full flex justify-evenly items-center">
                                         <h1 className="text-3xl font-bold text-white drop-shadow-lg">Contact Me</h1>
                                         <textarea
-                                        
+
                                             placeholder="Enter Message"
                                             className="border focus:outline-none focus:ring-2 text-center border-gray-300  resize h-[20vh] text-pretty leading-snug w-[20vw] focus:ring-blue-600 flex items-center justify-evenly px-6" />
                                     </div>
@@ -175,4 +186,3 @@ const LandingPage = () => {
 }
 
 export default LandingPage;
-// backdrop-blur-3xl

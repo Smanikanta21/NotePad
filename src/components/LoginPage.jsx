@@ -5,6 +5,7 @@ import github from '../assets/github.png'
 import { Eye, EyeClosed, UserRound } from 'lucide-react'
 import { Link, redirect,useNavigate } from 'react-router-dom'
 import axios from 'axios'
+import { toast } from 'react-toastify'
 const LoginPage = () => {
     const nav = useNavigate();
     const [email, setEmail] = useState('');
@@ -25,11 +26,11 @@ const LoginPage = () => {
         try{
             const response = await axios.post('https://notepad-backend-3fo1.onrender.com/auth/login', { email, password }, { withCredentials: true },{credentials: 'include'});
             console.log('login successfull')
-            alert("Login successful");
+            toast.success("Login successful");
             nav('/home');
         }catch(error){
             console.error('Login failed:', error);
-            alert("Login failed. Please check your credentials.");
+            toast.error("Login failed. Please check your credentials.");
         }
         setLoading(false);
     }

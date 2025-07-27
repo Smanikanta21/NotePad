@@ -6,7 +6,7 @@ import { LogIn, EyeClosed, Eye } from 'lucide-react'
 import { BrowserRouter, Link, useNavigate } from 'react-router-dom'
 import { set } from 'mongoose'
 import axios from 'axios'
-
+import { toast } from 'react-toastify'
 const SignupPage = () => {
   const nav = useNavigate();
 
@@ -35,7 +35,7 @@ const SignupPage = () => {
     }catch(error){
       console.error('Error signing up:', error);
       setLoading(false)
-      alert('Error signing up, please try again.', error.message);
+      toast.error('Error signing up, please try again.');
     }
 
   };
@@ -48,8 +48,6 @@ const SignupPage = () => {
             </div>
         );
     }
-
-  console.log("Signup rendered")
   return (
     <div>
       <div className='z-10 fixed md:-top-96 md:flex md:justify-center w-full'>
