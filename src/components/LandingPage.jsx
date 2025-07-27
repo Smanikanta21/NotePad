@@ -19,11 +19,7 @@ const LandingPage = () => {
                     <div className="fixed top-0 left-0 w-full z-30 backdrop-blur-sm shadow-md border-b border-white/20 pb-1">
                         <nav className="flex md:ml-11 w-full md:w-11/12 gap-4 md:gap-7 pt-6 md:justify-around md:pt-2 flex-row items-center">
                             <div className="md:hidden fixed top-8 left-2">
-                                {menu ? (
-                                    <X size={30} onClick={() => setMenu(false)} />
-                                ) : (
-                                    <LucideMenu size={30} onClick={() => setMenu(true)} />
-                                )}
+                                {menu ? (<X size={30} onClick={() => setMenu(false)} />) : (<LucideMenu size={30} onClick={() => setMenu(true)} />)}
                             </div>
 
                             <div className="flex gap-5 flex-col w-full md:w-auto justify-center items-center">
