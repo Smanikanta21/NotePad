@@ -4,30 +4,35 @@ import { User, Mail, Calendar, Camera, Edit3, Save, X, Settings, Shield, Bell } 
 const Profile = () => {
   const [user, setUser] = useState(null)
   const [loading, setLoading] = useState(true)
-  const [isEditing, setIsEditing] = useState(false)
-  const [editedUser, setEditedUser] = useState({})
-  const [imagePreview, setImagePreview] = useState(null)
-  const [updating, setUpdating] = useState(false)
+  const [editing, setEditing] = useState(false)
+  const [formData, setFormData] = useState({})
+  const [previewImage, setPreviewImage] = useState(null)
+  const [saving, setSaving] = useState(false)
+  const [errorMsg, setErrorMsg] = useState(null)
+  const [successMsg, setSuccessMsg] = useState(null)
 
   useEffect(() => {
-    const fetchUserData = async () => {
+    const getUserProfile = async () => {
       try {
         const response = await fetch('https://notepad-backend-3fo1.onrender.com/auth/profile', {
           method: 'GET',
           credentials: 'include',
         })
         if (response.ok) {
-          const userData = await response.json()
-          setUser(userData)
-          setEditedUser(userData)
+          const data = await response.json()
+          setUser(data.user)
+          setFormData(data.user)
+        } else {
+          setErrorMsg('Failed to fetch profile data')
         }
-      } catch (error) {
-        console.error('Error fetching user data:', error)
+      } catch (err) {
+        console.error('Error fetching user data:', err)
+        setErrorMsg('Network error occurred')
       } finally {
         setLoading(false)
       }
     }
-    fetchUserData()
+    getUserProfile()
   }, [])
 
   const handleImageChange = (e) => {
@@ -35,42 +40,50 @@ const Profile = () => {
     if (file) {
       const reader = new FileReader()
       reader.onload = () => {
-        setImagePreview(reader.result)
-        setEditedUser({ ...editedUser, profilepic: reader.result })
+        setPreviewImage(reader.result)
+        setFormData({ ...formData, profilepic: reader.result })
       }
       reader.readAsDataURL(file)
     }
   }
 
-  const handleSave = async () => {
-    setUpdating(true)
+  const saveProfile = async () => {
+    setSaving(true)
+    setErrorMsg(null)
+    setSuccessMsg(null)
     try {
-      const response = await fetch('https://notepad-backend-3fo1.onrender.com/auth/updateProfile', {
+      const response = await fetch('https://notepad-backend-3fo1.onrender.com/auth/profile', {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
         },
         credentials: 'include',
-        body: JSON.stringify(editedUser)
+        body: JSON.stringify(formData)
       })
       
       if (response.ok) {
-        const updatedUser = await response.json()
-        setUser(updatedUser)
-        setIsEditing(false)
-        setImagePreview(null)
+        const data = await response.json()
+        setUser(data.user)
+        setEditing(false)
+        setPreviewImage(null)
+        setSuccessMsg('Profile updated successfully!')
+        setTimeout(() => setSuccessMsg(null), 3000)
+      } else {
+        const errorData = await response.json()
+        setErrorMsg(errorData.message || 'Failed to update profile')
       }
-    } catch (error) {
-      console.error('Error updating profile:', error)
+    } catch (err) {
+      console.error('Error updating profile:', err)
+      setErrorMsg('Network error occurred')
     } finally {
-      setUpdating(false)
+      setSaving(false)
     }
   }
 
-  const handleCancel = () => {
-    setEditedUser(user)
-    setIsEditing(false)
-    setImagePreview(null)
+  const cancelEdit = () => {
+    setFormData(user)
+    setEditing(false)
+    setPreviewImage(null)
   }
 
   if (loading) {
@@ -81,9 +94,37 @@ const Profile = () => {
     )
   }
 
+  if (errorMsg && !user) {
+    return (
+      <div className="h-screen flex items-center justify-center">
+        <div className="text-center">
+          <div className="text-red-600 text-xl mb-4">Error loading profile</div>
+          <p className="text-gray-600">{errorMsg}</p>
+          <button 
+            onClick={() => window.location.reload()} 
+            className="mt-4 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
+          >
+            Retry
+          </button>
+        </div>
+      </div>
+    )
+  }
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 pt-24 pb-8">
       <div className="max-w-4xl mx-auto px-4">
+        {successMsg && (
+          <div className="mb-6 p-4 bg-green-50 border border-green-200 text-green-800 rounded-lg">
+            {successMsg}
+          </div>
+        )}
+        {errorMsg && (
+          <div className="mb-6 p-4 bg-red-50 border border-red-200 text-red-800 rounded-lg">
+            {errorMsg}
+          </div>
+        )}
+        
         <div className="bg-white rounded-3xl shadow-xl overflow-hidden mb-8">
           <div className="bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 h-48 relative">
             <div className="absolute inset-0 bg-black/20"></div>
@@ -92,12 +133,12 @@ const Profile = () => {
                 <div className="relative">
                   <div className="w-32 h-32 rounded-full overflow-hidden border-4 border-white shadow-lg bg-white">
                     <img 
-                      src={imagePreview || user?.profilepic || 'https://via.placeholder.com/150'} 
+                      src={previewImage || user?.profilepic || 'https://via.placeholder.com/150'} 
                       alt="Profile" 
                       className="w-full h-full object-cover"
                     />
                   </div>
-                  {isEditing && (
+                  {editing && (
                     <label className="absolute bottom-2 right-2 bg-blue-600 hover:bg-blue-700 text-white p-2 rounded-full cursor-pointer transition-all duration-200 shadow-lg">
                       <Camera size={16} />
                       <input type="file" accept="image/*" onChange={handleImageChange} className="hidden" />
@@ -105,8 +146,8 @@ const Profile = () => {
                   )}
                 </div>
                 <div className="flex-1 text-white pb-4">
-                  {isEditing ? (
-                    <input type="text" value={editedUser.name || ''} onChange={(e) => setEditedUser({ ...editedUser, name: e.target.value })} className="text-3xl font-bold bg-transparent border-b-2 border-white/50 focus:border-white outline-none placeholder-white/70" placeholder="Your Name"/>
+                  {editing ? (
+                    <input type="text" value={formData.name || ''} onChange={(e) => setFormData({ ...formData, name: e.target.value })} className="text-3xl font-bold bg-transparent border-b-2 border-white/50 focus:border-white outline-none placeholder-white/70" placeholder="Your Name"/>
                   ) : (
                     <h1 className="text-3xl font-bold">{user?.name}</h1>
                   )}
@@ -118,25 +159,23 @@ const Profile = () => {
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-          {/* Main Profile Info */}
           <div className="lg:col-span-2 space-y-6">
-            {/* Personal Information */}
             <div className="bg-white rounded-2xl shadow-lg p-6">
               <div className="flex items-center justify-between mb-6">
                 <h2 className="text-2xl font-bold text-gray-800 flex items-center gap-2">
                   <User className="text-blue-600" size={24} />
                   Personal Information
                 </h2>
-                {!isEditing ? (
-                  <button onClick={() => setIsEditing(true)} className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-all duration-200">
+                {!editing ? (
+                  <button onClick={() => setEditing(true)} className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-all duration-200">
                     <Edit3 size={16} />Edit Profile
                   </button>
                 ) : (
                   <div className="flex gap-2">
-                    <button onClick={handleSave} disabled={updating} className="flex items-center gap-2 px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-all duration-200 disabled:opacity-50">
-                      <Save size={16} /> {updating ? 'Saving...' : 'Save'}
+                    <button onClick={saveProfile} disabled={saving} className="flex items-center gap-2 px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-all duration-200 disabled:opacity-50">
+                      <Save size={16} /> {saving ? 'Saving...' : 'Save'}
                     </button>
-                    <button onClick={handleCancel} className="flex items-center gap-2 px-4 py-2 bg-gray-600 text-white rounded-lg hover:bg-gray-700 transition-all duration-200">
+                    <button onClick={cancelEdit} className="flex items-center gap-2 px-4 py-2 bg-gray-600 text-white rounded-lg hover:bg-gray-700 transition-all duration-200">
                       <X size={16} />Cancel
                     </button>
                   </div>
@@ -146,8 +185,8 @@ const Profile = () => {
               <div className="space-y-4">
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">Full Name</label>
-                  {isEditing ? (
-                    <input type="text" value={editedUser.name || ''} onChange={(e) => setEditedUser({ ...editedUser, name: e.target.value })} className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200" placeholder="Enter your full name"/>
+                  {editing ? (
+                    <input type="text" value={formData.name || ''} onChange={(e) => setFormData({ ...formData, name: e.target.value })} className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200" placeholder="Enter your full name"/>
                   ) : (
                     <div className="px-4 py-3 bg-gray-50 rounded-lg text-gray-800"> {user?.name || 'Not provided'}</div>
                   )}
@@ -182,7 +221,7 @@ const Profile = () => {
                 </div>
               </div>
             </div>
-            
+
             <div className="bg-white rounded-2xl shadow-lg p-6">
               <h2 className="text-2xl font-bold text-gray-800 mb-6">Activity Overview</h2>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
@@ -202,9 +241,7 @@ const Profile = () => {
             </div>
           </div>
 
-          {/* Sidebar */}
           <div className="space-y-6">
-            {/* Quick Actions */}
             <div className="bg-white rounded-2xl shadow-lg p-6">
               <h3 className="text-lg font-bold text-gray-800 mb-4">Quick Actions</h3>
               <div className="space-y-3">
@@ -223,7 +260,6 @@ const Profile = () => {
               </div>
             </div>
 
-            {/* Account Status */}
             <div className="bg-gradient-to-br from-green-50 to-emerald-50 border border-green-200 rounded-2xl p-6">
               <div className="flex items-center gap-3 mb-2">
                 <div className="w-3 h-3 bg-green-500 rounded-full"></div>
@@ -234,7 +270,6 @@ const Profile = () => {
               </p>
             </div>
 
-            {/* Support */}
             <div className="bg-white rounded-2xl shadow-lg p-6">
               <h3 className="text-lg font-bold text-gray-800 mb-4">Need Help?</h3>
               <p className="text-gray-600 text-sm mb-4">
