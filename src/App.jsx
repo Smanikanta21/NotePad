@@ -5,6 +5,7 @@ import Login from './components/LoginPage'
 import Signup from './components/SignupPage'
 import LandingPage from './components/LandingPage'
 import Setting from './components/settings'
+import Profile from './components/Profile'
 import { BrowserRouter,Routes,Route,Outlet } from 'react-router-dom'
 function App() {
 
@@ -16,6 +17,7 @@ function App() {
         <Route element={<><Nav /><Outlet /></>}>
           <Route path='/home' element={<Home />} />
           <Route path='/settings' element={<Setting/>}/>
+          <Route path='/profile' element={<Profile />} />
           <Route path='/contact' element={<div>Contact</div>} />
         </Route>
       </Routes>

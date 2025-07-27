@@ -56,6 +56,10 @@ const Nav = () => {
                 <span className="transition-colors duration-300 group-hover:text-blue-600">DashBoard</span>
                 <span className="absolute left-0 bottom-0 h-0.5 w-0 bg-blue-600 transition-all duration-300 group-hover:w-full"></span>
               </Link>
+              <Link to="/profile" className="group relative transform transition-transform duration-300 hover:scale-110">
+                <span className="transition-colors duration-300 group-hover:text-blue-600">Profile</span>
+                <span className="absolute left-0 bottom-0 h-0.5 w-0 bg-blue-600 transition-all duration-300 group-hover:w-full"></span>
+              </Link>
               <Link to="/contact" className="group relative transform transition-transform duration-300 hover:scale-110">
                 <span className="transition-colors duration-300 group-hover:text-blue-600">Contact</span>
                 <span className="absolute left-0 bottom-0 h-0.5 w-0 bg-blue-600 transition-all duration-300 group-hover:w-full"></span>
@@ -73,7 +77,8 @@ const Nav = () => {
       </div>
       {showMenu && (
         <div className="absolute top-20 left-4 right-4 md:hidden bg-white p-4 rounded-xl shadow-lg z-50 flex flex-col gap-2">
-          <Link to="/">Home</Link>
+          <Link to="/home">Home</Link>
+          <Link to="/profile">Profile</Link>
           <Link to="/contact">Contact</Link>
           <Link to="/settings">Settings</Link>
           <button
