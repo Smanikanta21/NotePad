@@ -48,7 +48,7 @@ const Home = () => {
       <>
         <div>
           <div className="h-screen">
-            <div className="mt-20 p-4">
+            <div className="mt-20 mx-4 p-4">
               {bringnotes.length === 0 ? (
                 <p className="text-center text-gray-500">No notes yet.</p>
               ) : (
@@ -59,6 +59,7 @@ const Home = () => {
                       className="bg-white shadow-lg rounded-lg p-4"
                     >
                       <h3 className="text-lg font-semibold">{note.title}</h3>
+                      
                     </div>
                   ))}
                 </div>
