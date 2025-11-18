@@ -3,7 +3,6 @@ import { LucideMenu, X, Sun, Moon, Ellipsis, FileText } from 'lucide-react'
 import { Link } from 'react-router-dom'
 import axios from 'axios'
 import { toast } from 'react-toastify'
-// import { signOut } from '../lib/auth'
 const Nav = () => {
   const [theme, SetTheme] = useState(false)
   const [showMenu, SetShowMenu] = useState(false)
