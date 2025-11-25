@@ -1,0 +1,11 @@
+var R=require("../../chunks/ssr/[turbopack]_runtime.js")("server/app/_global-error/page.js")
+R.c("server/chunks/ssr/[root-of-the-server]__48c1631f._.js")
+R.c("server/chunks/ssr/Library_Mobile Documents_com~apple~CloudDocs_Projects_NotePad_frontend_403ee9d6._.js")
+R.c("server/chunks/ssr/6ae0c_next_dist_40bd5cf1._.js")
+R.c("server/chunks/ssr/[root-of-the-server]__a3e304c5._.js")
+R.c("server/chunks/ssr/6ae0c_73c3d8b6._.js")
+R.c("server/chunks/ssr/6ae0c_next_dist_c312078f._.js")
+R.c("server/chunks/ssr/fc3ed_Mobile Documents_com~apple~CloudDocs_Projects_NotePad_frontend_app_115da93d._.js")
+R.c("server/chunks/ssr/4fc60_NotePad_frontend__next-internal_server_app__global-error_page_actions_a870d89d.js")
+R.m(36928)
+module.exports=R.m(36928).exports

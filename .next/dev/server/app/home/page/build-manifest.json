@@ -1,0 +1,22 @@
+{
+  "devFiles": [],
+  "ampDevFiles": [],
+  "polyfillFiles": [
+    "static/chunks/6ae0c_next_dist_build_polyfills_polyfill-nomodule.js"
+  ],
+  "lowPriorityFiles": [],
+  "rootMainFiles": [
+    "static/chunks/[turbopack]_browser_dev_hmr-client_hmr-client_ts_f32fe472._.js",
+    "static/chunks/6ae0c_next_dist_compiled_react-dom_75fe7b5d._.js",
+    "static/chunks/6ae0c_next_dist_compiled_react-server-dom-turbopack_9d3463ca._.js",
+    "static/chunks/6ae0c_next_dist_compiled_next-devtools_index_f6acd3d9.js",
+    "static/chunks/6ae0c_next_dist_compiled_0e1eeed3._.js",
+    "static/chunks/6ae0c_next_dist_client_dbbbc0d1._.js",
+    "static/chunks/6ae0c_next_dist_22d2abf3._.js",
+    "static/chunks/6ae0c_@swc_helpers_cjs_6bc5d987._.js",
+    "static/chunks/Library_Mobile Documents_com~apple~CloudDocs_Projects_NotePad_frontend_a0ff3932._.js",
+    "static/chunks/e52a1_Mobile Documents_com~apple~CloudDocs_Projects_NotePad_frontend_2a0c3d74._.js"
+  ],
+  "pages": {},
+  "ampFirstPages": []
+}

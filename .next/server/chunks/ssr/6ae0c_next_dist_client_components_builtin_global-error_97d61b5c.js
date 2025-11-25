@@ -1,0 +1,3 @@
+module.exports=[52270,(a,b,c)=>{let{createClientModuleProxy:d}=a.r(59611);a.n(d("[project]/Library/Mobile Documents/com~apple~CloudDocs/Projects/NotePad/frontend/node_modules/next/dist/client/components/builtin/global-error.js <module evaluation>"))},20394,(a,b,c)=>{let{createClientModuleProxy:d}=a.r(59611);a.n(d("[project]/Library/Mobile Documents/com~apple~CloudDocs/Projects/NotePad/frontend/node_modules/next/dist/client/components/builtin/global-error.js"))},95957,a=>{"use strict";a.i(52270);var b=a.i(20394);a.n(b)}];
+
+//# sourceMappingURL=6ae0c_next_dist_client_components_builtin_global-error_97d61b5c.js.map
