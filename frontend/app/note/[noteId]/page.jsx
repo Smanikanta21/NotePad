@@ -2,8 +2,7 @@
 import { useState, useEffect } from 'react'
 import { useParams, useRouter } from 'next/navigation'
 import { toast } from 'react-toastify'
-import { FloatingDock } from "../../components/ui/floating-dock";
-import {IconHome, } from "@tabler/icons-react"
+import { FloatingDock } from "../../../components/ui/floating-dock";
 
 const NoteDetail = () => {
     const params = useParams()

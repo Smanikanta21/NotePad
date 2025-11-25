@@ -12,7 +12,7 @@ const Profile = () => {
   const [saving, setSaving] = useState(false)
   const [errorMsg, setErrorMsg] = useState(null)
   const [successMsg, setSuccessMsg] = useState(null)
-  const url = import.meta.env.VITE_BACKEND_URL;
+  const url = process.env.NEXT_PUBLIC_BACKEND_URL;
   useEffect(() => {
     const getUserProfile = async () => {
       try {
