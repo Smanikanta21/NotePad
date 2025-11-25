@@ -1,7 +1,8 @@
+require('dotenv').config()
 const mongoose = require('mongoose')
-
+const url = process.env.MONGODB_URI
 const connectDB = () => {
-   return mongoose.connect(`mongodb+srv://siraparapuabhinay21:eRSNIVGEHscmP6cK@cluster0.bsza9xu.mongodb.net/note-pad`)
+   return mongoose.connect(`${url}NotePad`)
 }
 
 module.exports = connectDB

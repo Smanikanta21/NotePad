@@ -8,6 +8,7 @@ const auth = express.Router()
 const User = require('../models/User')
 const userAuthCheck = require('../middleware/userAuthCheck')
 require('dotenv').config()
+const url = process.env.FRONTEND_URL
 auth.use(cookieParser())
 
 auth.get('/google',
@@ -17,15 +18,18 @@ auth.get('/google',
 auth.get('/google/callback',
   passport.authenticate('google', { failureRedirect: '/login', session: false }),
   (req, res) => {
-    const token = jwt.sign({ _id: req.user._id }, process.env.JWT_SECRET, {
-      expiresIn: '7d',
-    });
-    res.cookie('token', token, {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === 'production',
-      sameSite: 'none',
-    });
-    res.redirect('https://note-pad-red.vercel.app/home');
+      const accessToken = jwt.sign({ _id: req.user._id }, process.env.JWT_SECRET, { expiresIn: '7d' });
+      const refreshToken = jwt.sign({ _id: req.user._id }, process.env.REFRESH_TOKEN_SECRET || process.env.JWT_SECRET, { expiresIn: '7d' });
+
+      const cookieOptions = {
+         httpOnly: true,
+         secure: process.env.NODE_ENV === 'production',
+         sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
+         path: '/',
+      };
+      res.cookie('refreshToken', refreshToken, { ...cookieOptions, maxAge: 7 * 24 * 60 * 60 * 1000 });
+      res.cookie('accessToken', accessToken, { ...cookieOptions, maxAge: 15 * 60 * 1000 });
+      res.redirect(`${url}/home`);
   }
 );
 
@@ -39,23 +43,30 @@ auth.post('/login' , async (req , res) => {
       if (ourUserArr.length === 0) return res.status(404).send(`Such user does not exist`)
       const isPassword = await bcrypt.compare(password , ourUserArr[0].password)
       if (isPassword) {
-         const token = jwt.sign({ _id: ourUserArr[0]._id } , process.env.JWT_SECRET , {expiresIn : '1day'})
-         res.cookie(`token` , token , {
-            httpOnly : true,
-            secure : process.env.NODE_ENV === 'production',
-            sameSite : 'none',
-         })
-         console.log(res.cookie)
-         return res.status(200).json({
-            message: 'Login successful',
-            userData: {
-               _id: ourUserArr[0]._id,
-               name: ourUserArr[0].name,
-               email: ourUserArr[0].email,
-               profilepic: ourUserArr[0].profilepic,
-               provider: ourUserArr[0].provider
+            // create tokens
+            const accessToken = jwt.sign({ _id: ourUserArr[0]._id } , process.env.JWT_SECRET , {expiresIn : '15m'})
+            const refreshToken = jwt.sign({ _id: ourUserArr[0]._id } , process.env.REFRESH_TOKEN_SECRET || process.env.JWT_SECRET , {expiresIn : '7d'})
+            const cookieOptions = {
+               httpOnly : true,
+               secure : process.env.NODE_ENV === 'production',
+               sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
+               path: '/',
             }
-         })
+            // set refresh token as httpOnly cookie
+            res.cookie('refreshToken', refreshToken, { ...cookieOptions, maxAge: 7 * 24 * 60 * 60 * 1000 })
+            // optionally set access token in cookie for convenience
+            res.cookie('accessToken', accessToken, { ...cookieOptions, maxAge: 15 * 60 * 1000 })
+            console.log('Issued tokens for user', ourUserArr[0]._id)
+            return res.status(200).json({
+               message: 'Login successful',
+               userData: {
+                  _id: ourUserArr[0]._id,
+                  name: ourUserArr[0].name,
+                  email: ourUserArr[0].email,
+                  profilepic: ourUserArr[0].profilepic,
+                  provider: ourUserArr[0].provider
+               }, accessToken
+            })
       }return res.status(401).send(`Password is Incorrect`)
    }catch(err){
       console.log(err.message)
@@ -69,6 +80,7 @@ auth.post('/signup' , async (req , res) => {
       const hashedPassword = await bcrypt.hash(password , 10)
       const newUser = new User({name , email , password : hashedPassword})
       const savedUser = await newUser.save()
+      console.log(savedUser)
       return res.status(201).json({
          message: 'User created successfully',
          userData: {
@@ -84,6 +96,30 @@ auth.post('/signup' , async (req , res) => {
       return res.status(500).send(`Internal Server Error`)
    }
 })
+
+   // Refresh endpoint - issues a new access token when a valid refresh token cookie is present
+   auth.get('/refresh', async (req, res) => {
+      try {
+         const refreshToken = req.cookies && req.cookies.refreshToken;
+         if (!refreshToken) return res.status(401).json({ message: 'No refresh token' });
+         const payload = jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET || process.env.JWT_SECRET);
+         const user = await User.findById(payload._id);
+         if (!user) return res.status(401).json({ message: 'User not found' });
+
+         const accessToken = jwt.sign({ _id: user._id }, process.env.JWT_SECRET, { expiresIn: '15m' });
+         const cookieOptions = {
+            httpOnly: true,
+            secure: process.env.NODE_ENV === 'production',
+            sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
+            path: '/',
+         };
+         res.cookie('accessToken', accessToken, { ...cookieOptions, maxAge: 15 * 60 * 1000 });
+         return res.status(200).json({ accessToken });
+      } catch (err) {
+         console.error('Refresh error:', err.message);
+         return res.status(401).json({ message: 'Invalid refresh token' });
+      }
+   });
 
 // Check if user is authenticated
 auth.get('/me', userAuthCheck, async (req, res) => {
@@ -187,12 +223,15 @@ auth.put('/change-password', userAuthCheck, async (req, res) => {
 });
 
 auth.post('/logout' , async (req , res) => {
-   return res.status(200).cookie(`token` , null , {
-      expires : new Date(Date.now()),
+   const cookieOptions = {
       httpOnly : true,
       secure : process.env.NODE_ENV === 'production',
-      sameSite: 'none'
-   }).send(`User Logout Successfully`)
+      sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
+      path: '/',
+   }
+   res.clearCookie('refreshToken', cookieOptions)
+   res.clearCookie('accessToken', cookieOptions)
+   return res.status(200).send('User Logout Successfully')
 })
 
 module.exports = auth

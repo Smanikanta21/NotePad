@@ -1,24 +1,25 @@
+"use client"
 import { React, useState, useEffect } from 'react'
 import { LucideMenu, X, Sun, Moon, Ellipsis, FileText } from 'lucide-react'
-import { Link } from 'react-router-dom'
+import Link from 'next/link'
 import axios from 'axios'
 import { toast } from 'react-toastify'
 const Nav = () => {
   const [theme, SetTheme] = useState(false)
   const [showMenu, SetShowMenu] = useState(false)
-  const [savedTheme, setSavedTheme] = useState(localStorage.getItem('theme') || 'light');
+  const [savedTheme, setSavedTheme] = useState('light');
   useEffect(() => {
-    const savedTheme = localStorage.getItem('theme');
-    if (savedTheme) {
-      SetTheme(savedTheme === 'dark');
+    if (typeof window !== 'undefined' && window.localStorage) {
+      const saved = localStorage.getItem('theme');
+      if (saved) SetTheme(saved === 'dark');
     }
   }, []);
   const [mdMenu, setMdMenu] = useState(false)
-
+  const url = process.env.NEXT_PUBLIC_BACKEND_URL;
 
   const signout = async () => {
     try {
-      await axios.post('https://notepad-backend-3fo1.onrender.com/auth/logout', { withCredentials: true });
+      await axios.post(`${url}/auth/logout`, {}, { withCredentials: true });
       console.log('signedout successfull')
       toast.success('Logged Out Successfully')
       window.location.href = '/login';
@@ -32,7 +33,9 @@ const Nav = () => {
   useEffect(() => {
     document.body.classList.remove('light', 'dark')
     document.body.classList.add(theme ? 'dark' : 'light')
-    const savedTheme = localStorage.getItem('theme');
+    if (typeof window !== 'undefined' && window.localStorage) {
+      localStorage.setItem('theme', theme ? 'dark' : 'light')
+    }
   }, [theme])
   return (
     <div className='flex flex-row justify-center items-center mt-4 fixed top-0 left-0 right-0'>
@@ -40,7 +43,7 @@ const Nav = () => {
         <div className='w-[90%] flex justify-between items-center'>
           <div className='flex items-center justify-center'>
             <div className='md:hidden fixed top-4 left-4 flex pl-2 items-center'>{showMenu ? <X size={30} onClick={() => SetShowMenu(false)} /> : <LucideMenu size={30} onClick={() => SetShowMenu(true)} />}</div>
-              <Link to="/" className='flex flex-col items-center mx-32 md:mx-0 gap-4 md:gap-2'>
+              <Link href="/" className='flex flex-col items-center mx-32 md:mx-0 gap-4 md:gap-2'>
                 <div className='flex flex-row gap-2.5 items-center'>
                   <div className='bg-gradient-to-r from-blue-500 to-purple-600 p-2 rounded-xl'>
                     <FileText size={24} className='text-white' />
@@ -53,10 +56,10 @@ const Nav = () => {
                 <div className='overflow-hidden transition-all duration-300 ease-in-out'>
                   {showMenu && (
                     <div className={`md:hidden p-4 rounded-xl  z-50 flex flex-col gap-2 `}>
-                      <Link to="/home">Home</Link>
-                      <Link to="/profile">Profile</Link>
-                      <Link to="/contact">Contact</Link>
-                      <Link to="/settings">Settings</Link>
+                      <Link href="/home">Home</Link>
+                      <Link href="/profile">Profile</Link>
+                      <Link href="/contact">Contact</Link>
+                      <Link href="/settings">Settings</Link>
                       <button className='text-red-700' onClick={async () => { signout() }}>SignOut</button>
                     </div>
                   )}
@@ -66,19 +69,19 @@ const Nav = () => {
           <div className='flex flex-row gap-3 justify-center items-center'>
             {/* <div className='md:flex md:items-center'><button onClick={() => { SetTheme(prev => !prev) }}>{theme ? <Sun size={30} className='text-yellow-400' /> : <Moon size={30} className='text-blue-600' />}</button></div> */}
             <div className='md:flex hidden md:gap-4 text-xl items-center justify-center' id='nav-links'>
-              <Link to="/home" className="group relative transform transition-transform duration-300 hover:scale-110">
+              <Link href="/home" className="group relative transform transition-transform duration-300 hover:scale-110">
                 <span className="transition-colors duration-300 group-hover:text-blue-600">DashBoard</span>
                 <span className="absolute left-0 bottom-0 h-0.5 w-0 bg-blue-600 transition-all duration-300 group-hover:w-full"></span>
               </Link>
-              <Link to="/profile" className="group relative transform transition-transform duration-300 hover:scale-110">
+              <Link href="/profile" className="group relative transform transition-transform duration-300 hover:scale-110">
                 <span className="transition-colors duration-300 group-hover:text-blue-600">Profile</span>
                 <span className="absolute left-0 bottom-0 h-0.5 w-0 bg-blue-600 transition-all duration-300 group-hover:w-full"></span>
               </Link>
-              <Link to="/contact" className="group relative transform transition-transform duration-300 hover:scale-110">
+              <Link href="/contact" className="group relative transform transition-transform duration-300 hover:scale-110">
                 <span className="transition-colors duration-300 group-hover:text-blue-600">Contact</span>
                 <span className="absolute left-0 bottom-0 h-0.5 w-0 bg-blue-600 transition-all duration-300 group-hover:w-full"></span>
               </Link>
-              <Link to="/settings" className="group relative transform transition-transform duration-300 hover:scale-110">
+              <Link href="/settings" className="group relative transform transition-transform duration-300 hover:scale-110">
                 <span className="transition-colors duration-300 group-hover:text-blue-600">Settings</span>
                 <span className="absolute left-0 bottom-0 h-0.5 w-0 bg-blue-600 transition-all duration-300 group-hover:w-full"></span>
               </Link>

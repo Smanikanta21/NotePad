@@ -1,3 +1,4 @@
+"use client"
 import React, { useState, useEffect } from 'react'
 import { User, Mail, Calendar, Camera, Edit3, Save, X, Settings, Shield, Bell } from 'lucide-react'
 import { toast } from 'react-toastify'
@@ -11,11 +12,11 @@ const Profile = () => {
   const [saving, setSaving] = useState(false)
   const [errorMsg, setErrorMsg] = useState(null)
   const [successMsg, setSuccessMsg] = useState(null)
-
+  const url = import.meta.env.VITE_BACKEND_URL;
   useEffect(() => {
     const getUserProfile = async () => {
       try {
-        const response = await fetch('https://notepad-backend-3fo1.onrender.com/auth/profile', {
+        const response = await fetch(`${url}/auth/profile`, {
           method: 'GET',
           credentials: 'include',
         })

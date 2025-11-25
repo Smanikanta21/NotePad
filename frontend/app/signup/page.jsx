@@ -1,14 +1,12 @@
+"use client"
 import { React, useState, useEffect } from 'react'
-import bg from '../assets/bg-assets.jpg'
-import google from '../assets/google.png'
-import github from '../assets/github.png'
 import { LogIn, EyeClosed, Eye } from 'lucide-react'
-import { BrowserRouter, Link, useNavigate } from 'react-router-dom'
-import { set } from 'mongoose'
+import Link from 'next/link'
+import { useRouter } from 'next/navigation'
 import axios from 'axios'
 import { toast } from 'react-toastify'
 const SignupPage = () => {
-  const nav = useNavigate();
+  const router = useRouter();
 
   const[loading,setLoading] = useState(false)
 
@@ -18,19 +16,20 @@ const SignupPage = () => {
   const [confPassword, setConfPassword] = useState('')
   const [showPassword, setShowPassword] = useState(false)
   const [confshowPassword, setConfShowPassword] = useState(false);
-
+  const url = process.env.NEXT_PUBLIC_BACKEND_URL;
 
   const HandleGooglesignIn = async () => {
     setLoading(true)
-    window.open('https://notepad-backend-3fo1.onrender.com/auth/google', '_self');
+    window.open(`${url}/auth/google`, '_self');
     setLoading(false)
   }
 
-  const CreateSignUp = async () => {
+  const CreateSignUp = async (e) => {
+    e.preventDefault();
     setLoading(true)
     try{
-      await axios.post('https://notepad-backend-3fo1.onrender.com/auth/signup', { name, email, password });
-    nav('/login');
+      await axios.post(`${url}/auth/signup`, { name, email, password });
+    router.push('/login');
     setLoading(false)
     }catch(error){
       console.error('Error signing up:', error);
@@ -50,9 +49,7 @@ const SignupPage = () => {
     }
   return (
     <div>
-      <div className='z-10 fixed md:-top-96 md:flex md:justify-center w-full'>
-        <img src={bg} className='md:w-[70vw]' alt="background" />
-      </div>
+      <img src={'/bg-assets.jpg'} aria-hidden="true" className='fixed inset-0 -z-10 left-[-10%] md:left-[-20%] w-[70%] md:w-[60%] lg:w-[50%] -scale-x-100 object-cover pointer-events-none opacity-90 blur-2xl transform-gpu' alt="background" />
       <div className='relative flex flex-col h-screen justify-center items-center z-20'>
         <div className='flex items-center h-12'>
           <h1 className='md:flex text-4xl font-extrabold mb-9'>NotePad</h1>
@@ -65,18 +62,18 @@ const SignupPage = () => {
             <input type="email" placeholder='Enter Email' onChange={(e) => setEmail(e.target.value)} className='border-b p-2.5 w-full text-lg md:w-[18vw] text-start transition duration-300 ease-in-out focus:ring-2 focus:ring-blue-400' />
             <div className="relative w-full md:w-[22vw] lg:w-[18vw]">
               <input type={showPassword ? "text" : "password"} placeholder="Enter Password" onChange={(e) => setPassword(e.target.value)} className="border-b p-2.5 text-lg w-full md:w-[18vw] text-start transition duration-300 ease-in-out focus:ring-2 focus:ring-blue-400" />
-              <button type="button" className="absolute right-0 top-2 text-sm text-black" onClick={() => setShowPassword(prev => !prev)}>{showPassword ? <EyeClosed /> : <Eye />}</button>
+              <button type="button" className="absolute right-2 top-3 text-sm text-black" onClick={() => setShowPassword(prev => !prev)}>{showPassword ? <EyeClosed /> : <Eye />}</button>
             </div>
             <div className="relative w-full md:w-[22vw] lg:w-[18vw]">
-              <input type={showPassword ? "text" : "password"} placeholder="Confirm Password" onChange={(e) => setConfPassword(e.target.value)} className="border-b p-2.5 text-lg w-full md:w-[18vw] text-start transition duration-300 ease-in-out focus:ring-2 focus:ring-blue-400" />
-              <button type="button" className="absolute right-0 top-2 text-sm text-black" onClick={() => setConfShowPassword(prev => !prev)}>{confshowPassword ? <EyeClosed /> : <Eye />}</button>
+              <input type={confshowPassword ? "text" : "password"} placeholder="Confirm Password" onChange={(e) => setConfPassword(e.target.value)} className="border-b p-2.5 text-lg w-full md:w-[18vw] text-start transition duration-300 ease-in-out focus:ring-2 focus:ring-blue-400" />
+              <button type="button" className="absolute right-2 top-3 text-sm text-black" onClick={() => setConfShowPassword(prev => !prev)}>{confshowPassword ? <EyeClosed /> : <Eye />}</button>
             </div>
             <button onClick={CreateSignUp} className='py-3 px-6 w-[60vw] md:w-auto rounded-xl text-xl bg-blue-600 mt-3 md:m-0 text-white shadow-xl hover:shadow-2xl hover:cursor-pointer hover:scale-115 hover:opacity-90 transition-transform duration-300 ease-in-out'>Create Account</button>
           </div>
-          <div className='hidden md:flex justify-center flex-col items-center gap-5'>
-            <button className='p-2 flex flex-row items-center px-4.5 py-3 rounded-xl gap-3.5 bg-white hover:scale-115 hover:opacity-90 hover:transition-transform hover:cursor-pointer shadow-xl hover:shadow-2xl transition-all duration-300 ease-in-out' onClick={HandleGooglesignIn}><img src={google} className='w-7' alt="" />Sign Up With Google</button>
-            <button className='p-2 flex flex-row items-center px-4.5 py-3.5 rounded-xl gap-3.5 bg-white hover:scale-115 hover:opacity-90 hover:transition-transform hover:cursor-pointer shadow-xl hover:shadow-2xl transition-all duration-300 ease-in-out'><img src={github} alt="" className='w-7' /> Sign Up With Github</button>
-            <Link to='/login' className='p-2 flex flex-row items-center px-3.5 py-2 rounded-xl gap-3.5 bg-white hover:scale-115 hover:transition-transform hover:cursor-pointer shadow-xl hover:shadow-2xl '><LogIn size={30} />Already have an account?<br /> Login</Link>
+            <div className='hidden md:flex justify-center flex-col items-center gap-5'>
+            <button className='p-2 flex flex-row items-center px-4.5 py-3 rounded-xl gap-3.5 bg-white hover:scale-115 hover:opacity-90 hover:transition-transform hover:cursor-pointer shadow-xl hover:shadow-2xl transition-all duration-300 ease-in-out' onClick={HandleGooglesignIn}><img src={'/google.png'} className='w-7' alt="" />Sign Up With Google</button>
+            <button className='p-2 flex flex-row items-center px-4.5 py-3.5 rounded-xl gap-3.5 bg-white hover:scale-115 hover:opacity-90 hover:transition-transform hover:cursor-pointer shadow-xl hover:shadow-2xl transition-all duration-300 ease-in-out'><img src={'/github.png'} alt="" className='w-7' /> Sign Up With Github</button>
+            <Link href='/login' className='p-2 flex flex-row items-center px-3.5 py-2 rounded-xl gap-3.5 bg-white hover:scale-115 hover:transition-transform hover:cursor-pointer shadow-xl hover:shadow-2xl '><LogIn size={30} />Already have an account?<br /> Login</Link>
           </div>
           <div className="md:hidden my-6 flex items-center">
             <div className="flex-1 border-t border-black"></div>
@@ -89,12 +86,12 @@ const SignupPage = () => {
                 onClick={HandleGooglesignIn}
                 className='w-8 transition-all duration-300 ease-in-out hover:opacity-90 hover:scale-115'
               >
-                <img src={google} alt="Google" />
+                <img src={'/google.png'} alt="Google" />
               </button>
-              <img src={github} alt="GitHub" className='w-8 transition-all duration-300 ease-in-out hover:opacity-90 hover:scale-115' />
+              <img src={'/github.png'} alt="GitHub" className='w-8 transition-all duration-300 ease-in-out hover:opacity-90 hover:scale-115' />
             </div>
             <div className='flex flex-col'>
-              <Link to='/login' className='hover:text-blue-600' >Already have an account</Link>
+              <Link href='/login' className='hover:text-blue-600' >Already have an account</Link>
             </div>
           </div>
         </div>
